@@ -1,0 +1,76 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Blocks">
+      <UniqueIdentifier>{EA50763E-F421-4098-A62A-A999B89A2AFD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Pango">
+      <UniqueIdentifier>{CFC2D028-DD70-415C-8D04-1D7DA035A5DA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Pango\src">
+      <UniqueIdentifier>{A4D252D7-5C9F-473D-B00C-4712C1E8AD1A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\PangoBasicApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PangoBasicApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClInclude Include="..\include\Resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\CairoContext.h">
+      <Filter>Blocks\Pango\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\CairoSurface.h">
+      <Filter>Blocks\Pango\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\FontDescription.h">
+      <Filter>Blocks\Pango\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Layout.h">
+      <Filter>Blocks\Pango\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Pango.h">
+      <Filter>Blocks\Pango\src</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\..\src\CairoContext.cpp">
+      <Filter>Blocks\Pango\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\CairoSurface.cpp">
+      <Filter>Blocks\Pango\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\FontDescription.cpp">
+      <Filter>Blocks\Pango\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Layout.cpp">
+      <Filter>Blocks\Pango\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Pango.cpp">
+      <Filter>Blocks\Pango\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\Resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

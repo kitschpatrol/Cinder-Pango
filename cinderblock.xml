@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<cinder>
+	<block
+	name="Pango"
+	id="com.kitschpatrol.pango"
+	git="https://github.com/bgbotond/Cinder-Pango"
+	url="https://github.com/bgbotond/Cinder-Pango"
+	author="Eric Mika, Oriol Ferrer Mesià, Diederick Huijbers, Matthias Rohrbach, and others."
+	summary="A thin wrapper for using the Pango text layout and rendering library with Cinder. Supports inline style markup and complex layouts that would be tedious to achieve with Cinder's built-in TextBox and TextLayout classes."
+	version="1.0.0"
+	library="http://www.pango.org"
+	license="MIT + LGPL"
+	>
+		<headerPattern>src/*.h</headerPattern>
+		<sourcePattern>src/*.cpp</sourcePattern>
+
+		<includePath system="true">include</includePath>
+		<includePath system="true">include/cairo</includePath>
+		<includePath system="true">include/fontconfig</includePath>
+		<includePath system="true">include/freetype2</includePath>
+		<includePath system="true">include/glib-2.0</includePath>
+		<includePath system="true">include/harfbuzz</includePath>
+		<includePath system="true">include/libpng16</includePath>
+		<includePath system="true">include/pixman-1</includePath>			
+		
+		<platform os="macosx">
+				<staticLibrary>lib/macosx/libcairo.a</staticLibrary>
+				<staticLibrary>lib/macosx/libfontconfig.a</staticLibrary>
+				<staticLibrary>lib/macosx/libfreetype.a</staticLibrary>
+				<staticLibrary>lib/macosx/libgettextpo.a</staticLibrary>
+				<staticLibrary>lib/macosx/libgio-2.0.a</staticLibrary>
+				<staticLibrary>lib/macosx/libglib-2.0.a</staticLibrary>
+				<staticLibrary>lib/macosx/libgmodule-2.0.a</staticLibrary>
+				<staticLibrary>lib/macosx/libgobject-2.0.a</staticLibrary>
+				<staticLibrary>lib/macosx/libgthread-2.0.a</staticLibrary>
+				<staticLibrary>lib/macosx/libharfbuzz.a</staticLibrary>
+				<staticLibrary>lib/macosx/libintl.a</staticLibrary>
+				<staticLibrary>lib/macosx/libpango-1.0.a</staticLibrary>
+				<staticLibrary>lib/macosx/libpangocairo-1.0.a</staticLibrary>
+				<staticLibrary>lib/macosx/libpangoft2-1.0.a</staticLibrary>
+				<staticLibrary>lib/macosx/libpixman-1.a</staticLibrary>
+				<staticLibrary>lib/macosx/libpng.a</staticLibrary>
+				<framework>libffi.tbd</framework>
+				<framework>libiconv.tbd</framework>
+				<framework>libz.tbd</framework>				
+				<framework>libbz2.tbd</framework>
+				<framework>libexpat.tbd</framework>
+		</platform>
+		
+		<platform os="msw">
+			<includePath>src</includePath>
+			<staticLibrary>lib/msw/$(PlatformTarget)/cairo.lib</staticLibrary>
+			<staticLibrary>lib/msw/$(PlatformTarget)/fontconfig.lib</staticLibrary>
+			<staticLibrary>lib/msw/$(PlatformTarget)/glib-2.0.lib</staticLibrary>
+			<staticLibrary>lib/msw/$(PlatformTarget)/gmodule-2.0.lib</staticLibrary>
+			<staticLibrary>lib/msw/$(PlatformTarget)/gobject-2.0.lib</staticLibrary>
+			<staticLibrary>lib/msw/$(PlatformTarget)/gthread-2.0.lib</staticLibrary>
+			<staticLibrary>lib/msw/$(PlatformTarget)/pango-1.0.lib</staticLibrary>
+			<staticLibrary>lib/msw/$(PlatformTarget)/pangocairo-1.0.lib</staticLibrary>
+			<staticLibrary>lib/msw/$(PlatformTarget)/pangoft2-1.0.lib</staticLibrary>
+			<staticLibrary>lib/msw/$(PlatformTarget)/pangowin32-1.0.lib</staticLibrary>
+			<staticLibrary>lib/msw/$(PlatformTarget)/pixman-1.lib</staticLibrary>
+			<buildCopy>lib/msw/$(PlatformTarget)/libcairo-2.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libcairo-gobject-2.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libcairo-script-interpreter-2.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libffi-6.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libfontconfig-1.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libfreetype-6.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libglib-2.0-0.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libgmodule-2.0-0.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libgobject-2.0-0.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libgthread-2.0-0.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libharfbuzz-0.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libiconv-2.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libintl-8.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/liblzma-5.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libpango-1.0-0.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libpangocairo-1.0-0.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libpangoft2-1.0-0.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libpangowin32-1.0-0.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libpixman-1-0.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libpng15-15.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libwinpthread-1.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/libxml2-2.dll</buildCopy>
+			<buildCopy>lib/msw/$(PlatformTarget)/zlib1.dll</buildCopy>			
+		</platform>
+		
+	</block>
+</cinder>
