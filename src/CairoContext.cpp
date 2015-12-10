@@ -12,8 +12,7 @@ CairoContext::CairoContext(CairoSurface *pSurface) : surface(pSurface), cr_conte
 		CI_LOG_E("Error creating the pango cairo context");
 	}
 
-	// Flip... on Cinder mac this needs a flip
-	// TODO, windows?
+	// Flip vertically... wasn't necessary in OF
 	cairo_scale(cr_context, 1.0f, -1.0f);
 	cairo_translate(cr_context, 0.0f, -this->getSurface()->getHeight());
 }
