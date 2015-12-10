@@ -1,6 +1,6 @@
 #Cinder-Pango
 
-**A thin wrapper for using the [Pango](http://pangu.io) text layout and rendering library with [Cinder](https://libcinder.org). Supports inline style markup and complex layouts that would be tedious to achieve with Cinder's built-in TextBox and TextLayout classes.**
+**A thin wrapper for using the [Pango](http://pangu.io) text layout and rendering library with [Cinder](https://libcinder.org). Supports [inline style markup](http://www.pygtk.org/docs/pygtk/pango-markup-language.html) and complex layouts that would be tedious to achieve with Cinder's built-in TextBox and TextLayout classes.**
 
 
 ## Getting Started
