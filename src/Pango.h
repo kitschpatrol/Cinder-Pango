@@ -30,7 +30,10 @@ public:
 	Pango();
 	CairoContext *createContextWithSurface(float fWidth, float fHeight, cairo_format_t nType = CAIRO_FORMAT_ARGB32);
 	Layout *createLayout(float fWidth, float fHeight);
-	void listFonts();
+
+	static std::vector<std::string> getFontList();
+	static void logFontList();
+	static void loadFont(const ci::fs::path &path);
 
 private:
 };

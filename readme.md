@@ -29,6 +29,15 @@ This library was not built with an eye towards backwards compatibility. It's pro
 
 ## Known Issues
 
+### Mac
+
+Some fonts may not render correctly on Mac OS X, they'll just render as a default serif or sans instead of what you requested. I haven't tracked down exactly how / why this is, but as a work-around you can tell PangoCairo to render glyphs with Freetype instead of the native CoreText library by setting the `PANGOCAIRO_BACKEND` environment variable:
+
+	setenv("PANGOCAIRO_BACKEND", "fontconfig", 0); // this works around some font issues on  mac
+
+
+
+
 ### Xcode
 
 If you get a bunch of `ld: warning: object file (../../../lib/macosx/libcairo.a(cairo.o)) was built for newer OSX version (10.11) than being linked (10.8)` warnings, then increase the minimum deploy target to 10.11.

@@ -204,11 +204,11 @@
 			isa = PBXGroup;
 			children = (
 				89022A3047C344D9830D8E9B /* Pango.h */,
+				2AAF860E500646F38D645A44 /* Pango.cpp */,
 				E4533B0021A944D387634B28 /* CairoContext.h */,
 				5C5D590EFB59409DB7C68FEF /* FontDescription.h */,
 				CD88E662CC664582ACD3A1E6 /* Layout.h */,
 				7C9C8DEC28284D51A406D180 /* CairoSurface.h */,
-				2AAF860E500646F38D645A44 /* Pango.cpp */,
 				9D1F205057B7413DB85D81D2 /* CairoContext.cpp */,
 				FCA0A1908D5D471D8457BF4D /* FontDescription.cpp */,
 				C7FEDECEC0FC4A86864D0CD5 /* Layout.cpp */,

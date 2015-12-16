@@ -3,7 +3,6 @@
 #include <pango/pangocairo.h>
 #include <string>
 
-
 namespace kp {
 namespace pango {
 

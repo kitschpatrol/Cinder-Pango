@@ -4,8 +4,11 @@
 using namespace kp::pango;
 
 CairoSurface::CairoSurface(float fWidth, float fHeight, cairo_format_t nType) {
+	// TODO cairo_image_surface_create_for_data instead, passing in surface or texture data directly?
 	cr_surface = cairo_image_surface_create(nType, fWidth, fHeight);
 	pixels = getWidth() * getHeight(); // we assume RGBA for now!
+
+	// needed?
 	new_data = new unsigned char[pixels * 4];
 }
 
