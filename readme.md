@@ -72,7 +72,10 @@ Windowns 32 bit libs from here and there, currently not working.
 
 ##TODO
 
+- Nicer, more Cinder-esque API.
+- Try blitting glyphs directly into a surface or texture by passing a reference to to the pixel data to `cairo_image_surface_create_for_data` instead of creating a new one via `cairo_image_surface_create`.
+- Figure out why some fonts don't load correctly on Mac + CoreText.
 - Use the Cinder Cairo block instead of including Cairo.
 - 32 bit Windows support. (Some issue with the GTK DLLs.)
-- Nicer, more Cinder-esque API.
+
 
