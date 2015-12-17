@@ -45,7 +45,7 @@ Tinderbox enables the /gm flag in Visual Studio projects by default, which will 
 
 There's an issue with the GTK DLLs afflicting Win32 bit builds. Win32 is currently not supported.
 
-## Dependences
+## Dependencies
 
 **All dependencies are included in the block.**
 
