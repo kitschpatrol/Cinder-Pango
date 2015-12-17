@@ -11,9 +11,9 @@ This block has an obscene number of dependencies. Using Tinderbox or similar to 
 
 ## Origin
 
-This is a near-verbatim port of [ofxPango](https://github.com/kitschpatrol/ofxpango), and as such the API style is not what you might expect from a Cinderblock. (For now.)
+This is a near-verbatim port of the [openFrameworks](http://openframeworks.cc) addon [ofxPango](https://github.com/kitschpatrol/ofxpango), and as such the API style is not what you might expect from a Cinderblock. (For now.)
 
-Thanks to Oriol Ferrer Mesià, Diederick Huijbers, Matthias Rohrbach, and others.
+Thanks to [Oriol Ferrer Mesià](http://uri.cat/), [Diederick Huijbers](http://www.roxlu.com), [Matthias Rohrbach](http://www.robandrose.ch), and others.
 
 
 ## Compatibility
@@ -35,9 +35,6 @@ Some fonts may not render correctly on Mac OS X, they'll just render as a defaul
 
 	setenv("PANGOCAIRO_BACKEND", "fontconfig", 0); // this works around some font issues on  mac
 
-
-
-
 ### Xcode
 
 If you get a bunch of `ld: warning: object file (../../../lib/macosx/libcairo.a(cairo.o)) was built for newer OSX version (10.11) than being linked (10.8)` warnings, then increase the minimum deploy target to 10.11.
@@ -52,7 +49,7 @@ There's an issue with the GTK DLLs afflicting Win32 bit builds. Win32 is current
 
 **All dependencies are included in the block.**
 
-On Mac, dependencies were build through [Homebrew](http://brew.sh). Two formulae had to be modified to build static libs instead of dylibs. The modified formulae are included in this repo. Here's how to build them if necesary:
+On Mac, dependencies were build through [Homebrew](http://brew.sh). Two formulae had to be modified to build static libs instead of dylibs. The modified formulae are included in this repo. Here's how to build them if necessary:
 
 	// from the /docs/homebrew folder in this repo
 	brew rm cairo
@@ -62,20 +59,17 @@ On Mac, dependencies were build through [Homebrew](http://brew.sh). Two formulae
 	brew install pango.rb --universal
 	brew install harfbuzz.rb --with-cairo --universal
 
-
-
 On Windows, dependencies were compiled elsewhere.
 
 Windows 64 bit libs procured via [gtk+-bundle_3.6.4-20130513_win64.zip](http://www.tarnyko.net/dl/gtk.htm) and [gtk2 installer](http://tschoonj.github.io/blog/2014/09/29/gtk2-64-bit-windows-runtime-environment-installer-now-on-github). (The latter had some issues... missing lib files.) See also another alternative [gtk-win64 build](http://lvserver.ugent.be/gtk-win64/).
 
-Windowns 32 bit libs from here and there, currently not working.
+Windows 32 bit libs from here and there, currently not working.
 
 ##TODO
 
 - Nicer, more Cinder-esque API.
+- Expose native vs. Freetype backend configuration at API level.
 - Try blitting glyphs directly into a surface or texture by passing a reference to to the pixel data to `cairo_image_surface_create_for_data` instead of creating a new one via `cairo_image_surface_create`.
 - Figure out why some fonts don't load correctly on Mac + CoreText.
 - Use the Cinder Cairo block instead of including Cairo.
 - 32 bit Windows support. (Some issue with the GTK DLLs.)
-
-
