@@ -3,14 +3,17 @@
 	<block
 	name="Pango"
 	id="com.kitschpatrol.pango"
-	git="https://github.com/bgbotond/Cinder-Pango"
-	url="https://github.com/bgbotond/Cinder-Pango"
+	git="https://github.com/kitschpatrol/Cinder-Pango.git"
+	url="https://github.com/kitschpatrol/cinder-pango"
 	author="Eric Mika, Oriol Ferrer Mesià, Diederick Huijbers, Matthias Rohrbach, and others."
 	summary="A thin wrapper for using the Pango text layout and rendering library with Cinder. Supports inline style markup and complex layouts that would be tedious to achieve with Cinder's built-in TextBox and TextLayout classes."
 	version="1.0.0"
 	library="http://www.pango.org"
 	license="MIT + LGPL"
 	>
+		<supports os="macosx" />
+		<supports os="msw" />	
+	
 		<headerPattern>src/*.h</headerPattern>
 		<sourcePattern>src/*.cpp</sourcePattern>
 
