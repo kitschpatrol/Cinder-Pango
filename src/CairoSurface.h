@@ -13,7 +13,7 @@ public:
 	int getWidth();
 	int getHeight();
 	unsigned char *getPixelsARGB(); /// no conversion, you get what you asked for when creating the surface
-	unsigned char *getPixelsRGBA(); /// this converts ARGB to RGBA so its expensive
+																	//	unsigned char *getPixelsRGBA(); /// this converts ARGB to RGBA so its expensive
 	void ref(std::string s = "");
 	cairo_surface_t *cr_surface;
 
