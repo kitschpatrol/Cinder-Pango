@@ -37,6 +37,189 @@
 // Render
 
 int main() {
+	const bool grayscale = false;
+	const bool native = false;
+
+	
+
+	
+	if (native) {
+		setenv("PANGOCAIRO_BACKEND", "coretext", 0);
+	} else {
+		setenv("PANGOCAIRO_BACKEND", "fontconfig", 0); // this fixes some font issues on  mac
+	}
+
+	/* ------------------------------------------------------------ */
+	/*                   I N I T I A L I Z E                        */
+	/* ------------------------------------------------------------ */
+
+	// measure
+	PangoFontMap *font_map = NULL;
+	font_map = pango_cairo_font_map_new();
+	if (font_map == NULL) {
+		printf("+ error: cannot create the pango font map.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	PangoContext *context = NULL;
+	context = pango_font_map_create_context(font_map);
+	if (NULL == context) {
+		printf("+ error: cannot create pango font context.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	/* create layout object. */
+	PangoLayout *layout = NULL;
+	layout = pango_layout_new(context);
+
+	if (NULL == layout) {
+		printf("+ error: cannot create the pango layout.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	/* create the font description @todo the reference does not tell how/when to free this */
+	PangoFontDescription *font_desc = NULL;
+	font_desc = pango_font_description_from_string("Times 35");
+	pango_layout_set_font_description(layout, font_desc);
+	pango_font_map_load_font(font_map, context, font_desc);
+	pango_font_description_free(font_desc);
+
+	/* set the width around which pango will wrap */
+	pango_layout_set_width(layout, 200 * PANGO_SCALE);
+	pango_layout_set_alignment(layout, PANGO_ALIGN_LEFT);
+
+	/* write using the markup feature */
+	const gchar *text = ""
+											"<span foreground=\"blue\" font_family=\"Gravur Condensed Pro\">"
+											"<b>bold</b> <u>is</u> <i>nicé</i> "
+											"</span>"
+											"<tt> hello </tt>"
+											"<span font_family=\"sans\" font_stretch=\"ultracondensed\" letter_spacing=\"500\" font_weight=\"light\"> SANS</span>"
+											"<span foreground=\"#FFCC00\"> colored</span>"
+											"";
+
+	// Measure
+	pango_layout_set_markup(layout, text, -1);
+
+	int pixelWidth = 0;
+	int pixelHeight = 0;
+	pango_layout_get_pixel_size(layout, &pixelWidth, &pixelHeight);
+
+	printf("Width: %i Height: %i\n", pixelWidth, pixelHeight);
+
+	// draw into cairo
+	_cairo_format cairoFormat = grayscale ? CAIRO_FORMAT_A8 : CAIRO_FORMAT_ARGB32;
+
+	cairo_surface_t *surf = NULL;
+	surf = cairo_image_surface_create(cairoFormat, pixelWidth, pixelHeight);
+
+	if (CAIRO_STATUS_SUCCESS != cairo_surface_status(surf)) {
+		printf("+ error: couldn't create the surface.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	/* create our cairo context object that tracks state. */
+	cairo_t *cr = cairo_create(surf);
+	if (CAIRO_STATUS_NO_MEMORY == cairo_status(cr)) {
+		printf("+ error: out of memory, cannot create cairo_t*\n");
+		exit(EXIT_FAILURE);
+	}
+
+	cairo_move_to(cr, 0, 0);
+	pango_cairo_update_layout(cr, layout);
+	pango_cairo_show_layout(cr, layout);
+
+	/* ------------------------------------------------------------ */
+	/*               O U T P U T  A N D  C L E A N U P              */
+	/* ------------------------------------------------------------ */
+
+	/* write to png */
+	cairo_status_t status;
+	status = cairo_surface_write_to_png(surf, "test_font.png");
+	if (CAIRO_STATUS_SUCCESS != status) {
+		printf("+ error: couldn't write to png\n");
+		exit(EXIT_FAILURE);
+	}
+
+	// destroy bmp?
+	cairo_surface_destroy(surf);
+	cairo_destroy(cr);
+
+	g_object_unref(layout);
+	g_object_unref(font_map);
+	g_object_unref(context);
+
+	return 0;
+}
+
+int main2() {
+	setenv("PANGOCAIRO_BACKEND", "fontconfig", 0); // this fixes some font issues on  mac
+
+	PangoFontMap *fontMap = pango_cairo_font_map_get_default();
+	PangoContext *pangoContext = pango_font_map_create_context(fontMap);
+	PangoLayout *pangoLayout = pango_layout_new(pangoContext);
+
+	float maxWidth = 200;
+
+	pango_layout_set_width(pangoLayout, maxWidth * PANGO_SCALE);
+
+	const gchar *text = ""
+											"<span foreground=\"blue\" font_family=\"Gravur Condensed Pro\">"
+											"<b>bold</b> <u>is</u> <i>nicé</i> "
+											"</span>"
+											"<tt> hello </tt>"
+											"<span font_family=\"sans\" font_stretch=\"ultracondensed\" letter_spacing=\"500\" font_weight=\"light\"> SANS</span>"
+											"<span foreground=\"#FFCC00\"> colored</span>"
+											"";
+
+	pango_layout_set_markup(pangoLayout, text, -1);
+
+	int width = 0;
+	int height = 0;
+	pango_layout_get_pixel_size(pangoLayout, &width, &height);
+
+	printf("Width: %i Height: %i\n", width, height);
+
+	cairo_surface_t *cairoSurface = NULL;
+	cairoSurface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+
+	if (CAIRO_STATUS_SUCCESS != cairo_surface_status(cairoSurface)) {
+		printf("+ error: couldn't create the surface.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	/* create our cairo context object that tracks state. */
+	cairo_t *cairoContext = NULL;
+	cairoContext = cairo_create(cairoSurface);
+	if (CAIRO_STATUS_NO_MEMORY == cairo_status(cairoContext)) {
+		printf("+ error: out of memory, cannot create cairo_t*\n");
+		exit(EXIT_FAILURE);
+	}
+
+	cairo_move_to(cairoContext, 0, 0);
+	pango_cairo_update_layout(cairoContext, pangoLayout);
+	pango_cairo_show_layout(cairoContext, pangoLayout);
+
+	/* write to png */
+	cairo_status_t status;
+	status = cairo_surface_write_to_png(cairoSurface, "test_font.png");
+	if (CAIRO_STATUS_SUCCESS != status) {
+		printf("+ error: couldn't write to png\n");
+		exit(EXIT_FAILURE);
+	}
+
+	// destroy bmp?
+	cairo_surface_destroy(cairoSurface);
+	cairo_destroy(cairoContext);
+
+	g_object_unref(pangoLayout);
+	g_object_unref(fontMap);
+	g_object_unref(pangoContext);
+
+	return 0;
+}
+
+int main3() {
 
 	setenv("PANGOCAIRO_BACKEND", "fontconfig", 0); // this fixes some font issues on  mac
 	// setenv("PANGOCAIRO_BACKEND", "coretext", 0);
