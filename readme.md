@@ -11,7 +11,7 @@ This block has an obscene number of dependencies. Using Tinderbox or similar to 
 
 ## Origin
 
-This is a near-verbatim port of the [openFrameworks](http://openframeworks.cc) addon [ofxPango](https://github.com/kitschpatrol/ofxpango), and as such the API style is not what you might expect from a Cinderblock. (For now.)
+This block was inspired by the [openFrameworks](http://openframeworks.cc) addon [ofxPango](https://github.com/kitschpatrol/ofxpango), though the API has changed significantly to hide more of Pango and expose a more Cinder-esque interface.
 
 Thanks to [Oriol Ferrer Mesià](http://uri.cat/), [Diederick Huijbers](http://www.roxlu.com), [Matthias Rohrbach](http://www.robandrose.ch), and others.
 
@@ -31,9 +31,10 @@ This library was not built with an eye towards backwards compatibility. It's pro
 
 ### Mac
 
-Some fonts may not render correctly on Mac OS X, they'll just render as a default serif or sans instead of what you requested. I haven't tracked down exactly how / why this is, but as a work-around you can tell PangoCairo to render glyphs with Freetype instead of the native CoreText library by setting the `PANGOCAIRO_BACKEND` environment variable:
+Some fonts may not render correctly on Mac OS X, they'll just render as a default serif or sans instead of what you requested. I haven't tracked down exactly how / why this is, but as a work-around you can tell PangoCairo to render glyphs with Freetype instead of the native CoreText library by setting the `PANGOCAIRO_BACKEND` environment variable. There's a method in the API to do this globally:
 
-	setenv("PANGOCAIRO_BACKEND", "fontconfig", 0); // this works around some font issues on  mac
+	CinderPango::setTextRenderer(TextRenderer::FREETYPE); // this works around some font issues on  mac
+
 
 ### Xcode
 
@@ -66,9 +67,8 @@ Windows 64 bit libs procured via [gtk+-bundle_3.6.4-20130513_win64.zip](http://w
 Windows 32 bit libs from here and there, currently not working.
 
 ##TODO
-
-- Nicer, more Cinder-esque API.
-- Expose native vs. Freetype backend configuration at API level.
+- Wrap more of the API. (Justified text, anti-aliasing modes, hyphenation, truncation policy, etc.)
+- Possible efficiencies from detecting the presence of markup and using pango_layout_set_markup vs. pango_layout_set_text.
 - Try blitting glyphs directly into a surface or texture by passing a reference to to the pixel data to `cairo_image_surface_create_for_data` instead of creating a new one via `cairo_image_surface_create`.
 - Figure out why some fonts don't load correctly on Mac + CoreText.
 - Use the Cinder Cairo block instead of including Cairo.

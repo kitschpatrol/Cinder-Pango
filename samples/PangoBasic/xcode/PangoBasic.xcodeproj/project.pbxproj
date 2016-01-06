@@ -19,16 +19,12 @@
 		12C6BA7694784367859A95BB /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 974CC404DE374615B54A61AD /* CinderApp.icns */; };
 		18CA2286B8944A2084BAC859 /* libexpat.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CD253FDB6FCD47249DF6F57E /* libexpat.tbd */; };
 		19F28B8C8CF8490B9B120333 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E7C584AD67EA434F96F32470 /* libbz2.tbd */; };
-		2AA534E1E53A4A18AEB9E8FD /* CairoSurface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF8D28E680F24B7AA45E9137 /* CairoSurface.cpp */; };
+		25AD8CB71C3CEC3000F6A1BB /* CinderPango.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25AD8CB51C3CEC3000F6A1BB /* CinderPango.cpp */; };
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		600C03F91A5B4B359DC33E63 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A8A8065CAC584155BD7274C5 /* libz.tbd */; };
-		6518BC02C57E45F88C696903 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7FEDECEC0FC4A86864D0CD5 /* Layout.cpp */; };
-		6A4FD3105DB0462B93B07787 /* Pango.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF860E500646F38D645A44 /* Pango.cpp */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		9F2B751CA2624C78A930F397 /* CairoContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D1F205057B7413DB85D81D2 /* CairoContext.cpp */; };
 		B3E2F50BFD7E4378B08344CF /* PangoBasicApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 09AE4E5D73CA4A83BA6F8F35 /* PangoBasicApp.cpp */; };
 		C79F5440766946BEA0DBA955 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C9AF53AC48244D7A04D1E48 /* libiconv.tbd */; };
-		CAE6CB48F48945FEA6AB8EB0 /* FontDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA0A1908D5D471D8457BF4D /* FontDescription.cpp */; };
 		ED8A1077B0A3493DB5F2DF9B /* libffi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BC82AFC1647F4DA0A00DC69C /* libffi.tbd */; };
 /* End PBXBuildFile section */
 
@@ -45,28 +41,20 @@
 		09AE4E5D73CA4A83BA6F8F35 /* PangoBasicApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = PangoBasicApp.cpp; path = ../src/PangoBasicApp.cpp; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		2520C45212AA45749CF2BF8A /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
+		25AD8CB51C3CEC3000F6A1BB /* CinderPango.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CinderPango.cpp; path = ../../../src/CinderPango.cpp; sourceTree = "<group>"; };
+		25AD8CB61C3CEC3000F6A1BB /* CinderPango.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CinderPango.h; path = ../../../src/CinderPango.h; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		2AAF860E500646F38D645A44 /* Pango.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Pango.cpp; path = ../../../src/Pango.cpp; sourceTree = "<group>"; };
 		4055DA68C96C4621BF501A39 /* PangoBasic_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = PangoBasic_Prefix.pch; sourceTree = "<group>"; };
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
-		5C5D590EFB59409DB7C68FEF /* FontDescription.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FontDescription.h; path = ../../../src/FontDescription.h; sourceTree = "<group>"; };
-		7C9C8DEC28284D51A406D180 /* CairoSurface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CairoSurface.h; path = ../../../src/CairoSurface.h; sourceTree = "<group>"; };
 		840B9854FD9E4748B91DACBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		89022A3047C344D9830D8E9B /* Pango.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Pango.h; path = ../../../src/Pango.h; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* PangoBasic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PangoBasic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		974CC404DE374615B54A61AD /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
 		9C9AF53AC48244D7A04D1E48 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = libiconv.tbd; path = ../../../libiconv.tbd; sourceTree = "<group>"; };
-		9D1F205057B7413DB85D81D2 /* CairoContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CairoContext.cpp; path = ../../../src/CairoContext.cpp; sourceTree = "<group>"; };
 		A8A8065CAC584155BD7274C5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = libz.tbd; path = ../../../libz.tbd; sourceTree = "<group>"; };
 		BC82AFC1647F4DA0A00DC69C /* libffi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = libffi.tbd; path = ../../../libffi.tbd; sourceTree = "<group>"; };
-		C7FEDECEC0FC4A86864D0CD5 /* Layout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Layout.cpp; path = ../../../src/Layout.cpp; sourceTree = "<group>"; };
 		CD253FDB6FCD47249DF6F57E /* libexpat.tbd */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = libexpat.tbd; path = ../../../libexpat.tbd; sourceTree = "<group>"; };
-		CD88E662CC664582ACD3A1E6 /* Layout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Layout.h; path = ../../../src/Layout.h; sourceTree = "<group>"; };
-		CF8D28E680F24B7AA45E9137 /* CairoSurface.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CairoSurface.cpp; path = ../../../src/CairoSurface.cpp; sourceTree = "<group>"; };
-		E4533B0021A944D387634B28 /* CairoContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CairoContext.h; path = ../../../src/CairoContext.h; sourceTree = "<group>"; };
 		E7C584AD67EA434F96F32470 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = libbz2.tbd; path = ../../../libbz2.tbd; sourceTree = "<group>"; };
-		FCA0A1908D5D471D8457BF4D /* FontDescription.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FontDescription.cpp; path = ../../../src/FontDescription.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,16 +191,8 @@
 		CDEF469E703545C0958D39C5 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				89022A3047C344D9830D8E9B /* Pango.h */,
-				2AAF860E500646F38D645A44 /* Pango.cpp */,
-				E4533B0021A944D387634B28 /* CairoContext.h */,
-				5C5D590EFB59409DB7C68FEF /* FontDescription.h */,
-				CD88E662CC664582ACD3A1E6 /* Layout.h */,
-				7C9C8DEC28284D51A406D180 /* CairoSurface.h */,
-				9D1F205057B7413DB85D81D2 /* CairoContext.cpp */,
-				FCA0A1908D5D471D8457BF4D /* FontDescription.cpp */,
-				C7FEDECEC0FC4A86864D0CD5 /* Layout.cpp */,
-				CF8D28E680F24B7AA45E9137 /* CairoSurface.cpp */,
+				25AD8CB61C3CEC3000F6A1BB /* CinderPango.h */,
+				25AD8CB51C3CEC3000F6A1BB /* CinderPango.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -281,11 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3E2F50BFD7E4378B08344CF /* PangoBasicApp.cpp in Sources */,
-				6A4FD3105DB0462B93B07787 /* Pango.cpp in Sources */,
-				9F2B751CA2624C78A930F397 /* CairoContext.cpp in Sources */,
-				CAE6CB48F48945FEA6AB8EB0 /* FontDescription.cpp in Sources */,
-				6518BC02C57E45F88C696903 /* Layout.cpp in Sources */,
-				2AA534E1E53A4A18AEB9E8FD /* CairoSurface.cpp in Sources */,
+				25AD8CB71C3CEC3000F6A1BB /* CinderPango.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +362,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CINDER_PATH = ../../../../..;
+				CINDER_PATH = ../../../../../Cinder;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++11";
 				CLANG_CXX_LIBRARY = "libc++";
 				ENABLE_TESTABILITY = YES;
@@ -414,7 +390,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CINDER_PATH = ../../../../..;
+				CINDER_PATH = ../../../../../Cinder;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++11";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
