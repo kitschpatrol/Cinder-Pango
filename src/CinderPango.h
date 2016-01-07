@@ -68,7 +68,11 @@ public:
 	// Rendering
 
 	const std::string getText();
-	void setText(std::string text); // markup welcome
+	
+	// setText can take inline markup to override the default text settings
+	// See here for full list of supported tags:
+	// https://developer.gnome.org/pango/stable/PangoMarkupFormat.html
+	void setText(std::string text);
 
 	// Text is rendered into this texture
 	const ci::gl::TextureRef getTexture();

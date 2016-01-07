@@ -19,7 +19,7 @@ public:
 };
 
 void PangoBasicApp::setup() {
-	kp::pango::CinderPango::setTextRenderer(kp::pango::TextRenderer::PLATFORM_NATIVE);
+	kp::pango::CinderPango::setTextRenderer(kp::pango::TextRenderer::FREETYPE);
 	mPango = kp::pango::CinderPango::create();
 	mPango->setMaxSize(getWindowWidth(), getWindowHeight());
 }
@@ -84,9 +84,8 @@ void PangoBasicApp::update() {
 				"hovedgruppen fra <i>forskjellige</i> destinasjoner. Tilknytningsbillett er gyldig inntil 24 timer f√∏r avreise hovedgruppe.\n\nUnicef said 3m "
 				"people had been affected and more than <span font=\"33.0\">1,400</span> had been killed. <b>The government</b> said some 27,000 people remained "
 				"trapped "
-				"and awaiting help. ");
-
-		//	std::to_string(getElapsedFrames()));
+				"and awaiting help. " +
+				std::to_string(getElapsedFrames()));
 
 		// Only renders if it needs to
 		mPango->render();

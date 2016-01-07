@@ -36,40 +36,40 @@ CinderPango::CinderPango()
 	CI_LOG_V("CinderPango Created");
 
 	// Create Font Map for reuse
-	fontMap = NULL;
+	fontMap = nullptr;
 	fontMap = pango_cairo_font_map_new();
-	if (fontMap == NULL) {
+	if (fontMap == nullptr) {
 		CI_LOG_E("Cannot create the pango font map.");
 		return;
 	}
 
 	// Create Pango Context for reuse
-	pangoContext = NULL;
+	pangoContext = nullptr;
 	pangoContext = pango_font_map_create_context(fontMap);
-	if (NULL == pangoContext) {
+	if (nullptr == pangoContext) {
 		CI_LOG_E("Cannot create the pango font context.");
 		return;
 	}
 
 	// Create Pango Layout for reuse
-	pangoLayout = NULL;
+	pangoLayout = nullptr;
 	pangoLayout = pango_layout_new(pangoContext);
-	if (pangoLayout == NULL) {
+	if (pangoLayout == nullptr) {
 		CI_LOG_E("Cannot create the pango layout.");
 		return;
 	}
 
 	// Initialize Cairo surface and context, will be instantiated on demand
-	cairoSurface = NULL;
-	cairoContext = NULL;
+	cairoSurface = nullptr;
+	cairoContext = nullptr;
 
 	// TODO pass these in.....
 	// Will be created on demand
-	fontDescription = NULL;
+	fontDescription = nullptr;
 
-	cairoFontOptions = NULL;
+	cairoFontOptions = nullptr;
 	cairoFontOptions = cairo_font_options_create();
-	if (cairoFontOptions == NULL) {
+	if (cairoFontOptions == nullptr) {
 		CI_LOG_E("Cannot create Cairo font options.");
 		return;
 	}
@@ -86,19 +86,19 @@ CinderPango::~CinderPango() {
 	g_object_unref(fontMap);
 	g_object_unref(pangoContext);
 
-	if (cairoSurface != NULL) {
+	if (cairoSurface != nullptr) {
 		cairo_surface_destroy(cairoSurface);
 	}
 
-	if (cairoContext != NULL) {
+	if (cairoContext != nullptr) {
 		cairo_destroy(cairoContext);
 	}
 
-	if (fontDescription != NULL) {
+	if (fontDescription != nullptr) {
 		pango_font_description_free(fontDescription);
 	}
 
-	if (cairoFontOptions != NULL) {
+	if (cairoFontOptions != nullptr) {
 		cairo_font_options_destroy(cairoFontOptions);
 	}
 }
@@ -118,7 +118,7 @@ void CinderPango::setText(std::string text) {
 }
 
 const ci::gl::TextureRef CinderPango::getTexture() {
-	// TODO null check?
+	// TODO nullptr check?
 	return mTexture;
 }
 
@@ -294,7 +294,7 @@ bool CinderPango::render(bool force) {
 		}
 
 		if (force || mNeedsFontUpdate) {
-			if (fontDescription != NULL) {
+			if (fontDescription != nullptr) {
 				pango_font_description_free(fontDescription);
 			}
 
@@ -330,16 +330,25 @@ bool CinderPango::render(bool force) {
 				pango_layout_set_alignment(pangoLayout, static_cast<PangoAlignment>(mTextAlignment));
 			}
 
-			pango_layout_set_wrap(pangoLayout, PANGO_WRAP_CHAR);
-
+			// pango_layout_set_wrap(pangoLayout, PANGO_WRAP_CHAR);
 			pango_layout_set_spacing(pangoLayout, mSpacing * PANGO_SCALE);
+
+			// TODO set specific attributes...
+			// Update font attributes
+			// PangoAttrList *attributeList = pango_attr_list_new();
+			// PangoAttribute *attribute;
+			// attribute = pango_attr_letter_spacing_new(10 * PANGO_SCALE);
+			// attribute->start_index = 0;
+			// attribute->end_index = -1;
+			// pango_attr_list_insert(attributeList, attribute);
+			// pango_layout_set_attributes(pangoLayout, attributeList);
+			// pango_attr_list_unref(attributeList);
 
 			// Set text
 			pango_layout_set_markup(pangoLayout, mText.c_str(), -1);
 			// pango_layout_set_text(pangoLayout, mText.c_str(), -1); // todo faster if we know there's no markup?
 
 			// Measure text
-
 			int newPixelWidth = 0;
 			int newPixelHeight = 0;
 
@@ -361,13 +370,13 @@ bool CinderPango::render(bool force) {
 		// Force this is we need to render but don't have a surface yet
 		bool freshCairoSurface = false;
 
-		if (force || needsSurfaceResize || (mNeedsTextRender && (cairoSurface == NULL))) {
+		if (force || needsSurfaceResize || (mNeedsTextRender && (cairoSurface == nullptr))) {
 			// Create appropriately sized cairo surface
 			const bool grayscale = false; // Not really supported
 			_cairo_format cairoFormat = grayscale ? CAIRO_FORMAT_A8 : CAIRO_FORMAT_ARGB32;
 
 			// clean up any existing surfaces
-			if (cairoSurface != NULL) {
+			if (cairoSurface != nullptr) {
 				cairo_surface_destroy(cairoSurface);
 			}
 
@@ -380,7 +389,7 @@ bool CinderPango::render(bool force) {
 
 			// Create context
 			/* create our cairo context object that tracks state. */
-			if (cairoContext != NULL) {
+			if (cairoContext != nullptr) {
 				cairo_destroy(cairoContext);
 			}
 

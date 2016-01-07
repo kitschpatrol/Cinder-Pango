@@ -1,6 +1,6 @@
 #Cinder-Pango
 
-**A thin wrapper for using the [Pango](http://pangu.io) text layout and rendering library with [Cinder](https://libcinder.org). Supports [inline style markup](http://www.pygtk.org/docs/pygtk/pango-markup-language.html) and complex layouts that would be tedious to achieve with Cinder's built-in TextBox and TextLayout classes.**
+**A thin wrapper for using the [Pango](http://www.pango.org) text layout and rendering library with [Cinder](https://libcinder.org). Supports [inline style markup](https://developer.gnome.org/pango/stable/PangoMarkupFormat.html) and complex layouts that would be tedious to achieve with Cinder's built-in TextBox and TextLayout classes.**
 
 
 ## Getting Started
@@ -34,6 +34,9 @@ This library was not built with an eye towards backwards compatibility. It's pro
 Some fonts may not render correctly on Mac OS X, they'll just render as a default serif or sans instead of what you requested. I haven't tracked down exactly how / why this is, but as a work-around you can tell PangoCairo to render glyphs with Freetype instead of the native CoreText library by setting the `PANGOCAIRO_BACKEND` environment variable. There's a method in the API to do this globally:
 
 	CinderPango::setTextRenderer(TextRenderer::FREETYPE); // this works around some font issues on  mac
+
+
+The TextRenderer::PLATFORM_NATIVE (coretext) backend renderer leaks memory through _pango_core_text_shape, _pango_cairo_core_text_font_new and other methods. The TextRenderer::FREETYPE backend renderer is comparatively free of leaks.
 
 
 ### Xcode
