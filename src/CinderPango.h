@@ -28,6 +28,28 @@ enum class TextRenderer {
 	PLATFORM_NATIVE,
 };
 
+enum class TextWeight : int {
+	THIN = 100,
+	ULTRALIGHT = 200,
+	LIGHT = 300,
+	SEMILIGHT = 350,
+	BOOK = 380,
+	NORMAL = 400,
+	MEDIUM = 500,
+	SEMIBOLD = 600,
+	BOLD = 700,
+	ULTRABOLD = 800,
+	HEAVY = 900,
+	ULTRAHEAVY = 1000
+};
+
+enum class TextAntialias : int {
+	DEFAULT,
+	NONE,
+	GRAY,
+	SUBPIXEL,
+};
+
 typedef std::shared_ptr<class CinderPango> CinderPangoRef;
 
 class CinderPango : public std::enable_shared_from_this<CinderPango> {
@@ -61,6 +83,10 @@ public:
 	void setMaxSize(ci::ivec2 maxSize);
 
 	// Setting default font styles is more efficient than passing markup via the text string
+
+	void setDefaultTextStyle(std::string font = "Sans", float size = 12.0, ci::ColorA color = ci::Color::black(), TextWeight weight = TextWeight::NORMAL,
+													 TextAlignment alignment = TextAlignment::LEFT); // convenience
+
 	ci::ColorA getDefaultTextColor();
 	void setDefaultTextColor(ci::ColorA color);
 
@@ -69,6 +95,12 @@ public:
 
 	std::string getDefaultTextFont();
 	void setDefaultTextFont(std::string font);
+
+	TextWeight getDefaultTextWeight();
+	void setDefaultTextWeight(TextWeight weight);
+
+	TextAntialias getTextAntialias();
+	void setTextAntialias(TextAntialias mode);
 
 	TextAlignment getTextAlignment();
 	void setTextAlignment(TextAlignment alignment);
@@ -93,12 +125,15 @@ private:
 	ci::ColorA mDefaultTextColor;
 	float mDefaultTextSize;
 	TextAlignment mTextAlignment;
+	TextWeight mDefaultTextWeight;
+	TextAntialias mTextAntialias;
 
 	// Internal flags for state invalidation
 	// Used by render method
 	bool mNeedsFontUpdate;
 	bool mNeedsMeasuring;
 	bool mNeedsTextRender;
+	bool mNeedsFontOptionUpdate;
 
 	// Pango references
 	PangoFontMap *fontMap;
@@ -107,6 +142,7 @@ private:
 	PangoFontDescription *fontDescription;
 	cairo_surface_t *cairoSurface;
 	cairo_t *cairoContext;
+	cairo_font_options_t *cairoFontOptions;
 };
 }
 } // namespace kp::pango

@@ -21,12 +21,15 @@ CinderPango::CinderPango()
 		, mNeedsFontUpdate(false)
 		, mNeedsMeasuring(false)
 		, mNeedsTextRender(false)
-		, mDefaultTextColor(ci::ColorA("black"))
+		, mNeedsFontOptionUpdate(false)
+		, mDefaultTextColor(ci::ColorA::black())
 		, mDefaultTextFont("Sans")
 		, mDefaultTextSize(12.0)
 		, mMinSize(ci::ivec2(0, 0))
 		, mMaxSize(ci::ivec2(320, 240))
-		, mTextAlignment(TextAlignment::LEFT) {
+		, mTextAlignment(TextAlignment::LEFT)
+		, mDefaultTextWeight(TextWeight::NORMAL)
+		, mTextAntialias(TextAntialias::DEFAULT) {
 	CI_LOG_V("CinderPango Created");
 
 	// Create Font Map for reuse
@@ -61,7 +64,15 @@ CinderPango::CinderPango()
 	// Will be created on demand
 	fontDescription = NULL;
 
+	cairoFontOptions = NULL;
+	cairoFontOptions = cairo_font_options_create();
+	if (cairoFontOptions == NULL) {
+		CI_LOG_E("Cannot create Cairo font options.");
+		return;
+	}
+
 	// Generate the default font config
+	mNeedsFontOptionUpdate = true;
 	mNeedsFontUpdate = true;
 	render();
 }
@@ -82,6 +93,10 @@ CinderPango::~CinderPango() {
 
 	if (fontDescription != NULL) {
 		pango_font_description_free(fontDescription);
+	}
+
+	if (cairoFontOptions != NULL) {
+		cairo_font_options_destroy(cairoFontOptions);
 	}
 }
 
@@ -104,6 +119,27 @@ const ci::gl::TextureRef CinderPango::getTexture() {
 	return mTexture;
 }
 
+void CinderPango::setDefaultTextStyle(std::string font, float size, ci::ColorA color, TextWeight weight, TextAlignment alignment) {
+	this->setDefaultTextFont(font);
+	this->setDefaultTextSize(size);
+	this->setDefaultTextColor(color);
+	this->setDefaultTextWeight(weight);
+	this->setTextAlignment(alignment);
+}
+
+TextWeight CinderPango::getDefaultTextWeight() {
+	return mDefaultTextWeight;
+}
+
+void CinderPango::setDefaultTextWeight(TextWeight weight) {
+	if (mDefaultTextWeight != weight) {
+		mDefaultTextWeight = weight;
+		mNeedsFontUpdate = true;
+		mNeedsMeasuring = true;
+		mNeedsTextRender = true;
+	}
+}
+
 TextAlignment CinderPango::getTextAlignment() {
 	return mTextAlignment;
 }
@@ -112,6 +148,19 @@ void CinderPango::setTextAlignment(TextAlignment alignment) {
 	if (mTextAlignment != alignment) {
 		mTextAlignment = alignment;
 		mNeedsMeasuring = true;
+		mNeedsTextRender = true;
+	}
+}
+
+TextAntialias CinderPango::getTextAntialias() {
+	return mTextAntialias;
+}
+
+void CinderPango::setTextAntialias(TextAntialias mode) {
+	if (mTextAntialias != mode) {
+		mTextAntialias = mode;
+		mNeedsFontOptionUpdate = true;
+		// TODO does this ever change metrics?
 		mNeedsTextRender = true;
 	}
 }
@@ -191,12 +240,25 @@ bool CinderPango::render(bool force) {
 		// Set options
 
 		// First run, and then if the fonts change
+
+		if (force || mNeedsFontOptionUpdate) {
+			cairo_font_options_set_antialias(cairoFontOptions, static_cast<cairo_antialias_t>(mTextAntialias));
+			cairo_font_options_set_hint_style(cairoFontOptions, CAIRO_HINT_STYLE_FULL);		// hmm
+			cairo_font_options_set_hint_metrics(cairoFontOptions, CAIRO_HINT_METRICS_ON); // hmm
+			pango_cairo_context_set_font_options(pangoContext, cairoFontOptions);
+
+			mNeedsFontOptionUpdate = false;
+		}
+
 		if (force || mNeedsFontUpdate) {
 			if (fontDescription != NULL) {
 				pango_font_description_free(fontDescription);
 			}
+
 			fontDescription = pango_font_description_from_string(std::string(mDefaultTextFont + " " + std::to_string(mDefaultTextSize)).c_str());
+			pango_font_description_set_weight(fontDescription, static_cast<PangoWeight>(mDefaultTextWeight));
 			pango_layout_set_font_description(pangoLayout, fontDescription);
+
 			pango_font_map_load_font(fontMap, pangoContext, fontDescription);
 
 			mNeedsFontUpdate = false;
