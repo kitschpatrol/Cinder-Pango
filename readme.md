@@ -1,6 +1,6 @@
 #Cinder-Pango
 
-**A thin wrapper for using the [Pango](http://www.pango.org) text layout and rendering library with [Cinder](https://libcinder.org). Supports [inline style markup](https://developer.gnome.org/pango/stable/PangoMarkupFormat.html) and complex layouts that would be tedious to achieve with Cinder's built-in TextBox and TextLayout classes.**
+**A wrapper for using the [Pango](http://www.pango.org) text layout and rendering library with [Cinder](https://libcinder.org). Supports [inline style markup](https://developer.gnome.org/pango/stable/PangoMarkupFormat.html) and complex layouts that would be tedious to achieve with Cinder's built-in TextBox and TextLayout classes.**
 
 
 ## Getting Started
@@ -70,7 +70,8 @@ Windows 64 bit libs procured via [gtk+-bundle_3.6.4-20130513_win64.zip](http://w
 Windows 32 bit libs from here and there, currently not working.
 
 ##TODO
-- Wrap more of the API. (Justified text, hyphenation, etc.)
+- Wrap more of the API. (Hyphenation, etc.)
+- Wrap certain attributes normally relegated to markup... letterspacing, underline, etc?
 - Possible efficiencies from detecting the presence of markup and using pango_layout_set_markup vs. pango_layout_set_text.
 - Try blitting glyphs directly into a surface or texture by passing a reference to to the pixel data to `cairo_image_surface_create_for_data` instead of creating a new one via `cairo_image_surface_create`.
 - Figure out why some fonts don't load correctly on Mac + CoreText.
