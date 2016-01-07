@@ -68,7 +68,7 @@ public:
 	// Rendering
 
 	const std::string getText();
-	
+
 	// setText can take inline markup to override the default text settings
 	// See here for full list of supported tags:
 	// https://developer.gnome.org/pango/stable/PangoMarkupFormat.html
@@ -110,13 +110,12 @@ public:
 	TextAlignment getTextAlignment();
 	void setTextAlignment(TextAlignment alignment);
 
-
 	bool getDefaultTextSmallCapsEnabled();
 	void setDefaultTextSmallCapsEnabled(bool value);
-	
+
 	bool getDefaultTextItalicsEnabled();
 	void setDefaultTextItalicsEnabled(bool value);
-	
+
 	float getSpacing();
 	void setSpacing(float spacing);
 

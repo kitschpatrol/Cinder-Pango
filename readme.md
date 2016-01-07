@@ -53,7 +53,7 @@ There's an issue with the GTK DLLs afflicting Win32 bit builds. Win32 is current
 
 **All dependencies are included in the block.**
 
-On Mac, dependencies were build through [Homebrew](http://brew.sh). Two formulae had to be modified to build static libs instead of dylibs. The modified formulae are included in this repo. Here's how to build them if necessary:
+On Mac, dependencies were built through [Homebrew](http://brew.sh). Two formulae had to be modified to build static libs instead of dylibs. The modified formulae are included in this repo. Here's how to build them if necessary:
 
 	// from the /docs/homebrew folder in this repo
 	brew rm cairo
