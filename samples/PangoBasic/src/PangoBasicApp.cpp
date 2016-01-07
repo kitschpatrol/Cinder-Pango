@@ -1,7 +1,9 @@
-#include "CinderPango.h"
+#include "cinder/Rand.h"
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
+
+#include "CinderPango.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -21,6 +23,7 @@ public:
 void PangoBasicApp::setup() {
 	kp::pango::CinderPango::setTextRenderer(kp::pango::TextRenderer::FREETYPE);
 	mPango = kp::pango::CinderPango::create();
+	mPango->setMinSize(100, 100);
 	mPango->setMaxSize(getWindowWidth(), getWindowHeight());
 }
 
@@ -55,7 +58,14 @@ void PangoBasicApp::keyDown(KeyEvent event) {
 			mPango = kp::pango::CinderPango::create();
 			mPango->setMaxSize(getWindowWidth(), getWindowHeight());
 			break;
-
+		case KeyEvent::KEY_b:
+			if (mPango->getBackgroundColor() == ci::ColorA::zero()) {
+				mPango->setBackgroundColor(ci::ColorA(ci::CM_HSV, ci::Rand::randFloat(), 0.5f, 1.0f, 1.0f));
+			} else {
+				// Go clear
+				mPango->setBackgroundColor(ci::ColorA::zero());
+			}
+			break;
 		case KeyEvent::KEY_r:
 			if (kp::pango::CinderPango::getTextRenderer() == kp::pango::TextRenderer::FREETYPE) {
 				kp::pango::CinderPango::setTextRenderer(kp::pango::TextRenderer::PLATFORM_NATIVE);

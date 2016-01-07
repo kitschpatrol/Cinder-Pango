@@ -72,6 +72,7 @@ Windows 32 bit libs from here and there, currently not working.
 ##TODO
 - Wrap more of the API. (Hyphenation, etc.)
 - Wrap certain attributes normally relegated to markup... letterspacing, underline, etc?
+- High DPI stuff.
 - Possible efficiencies from detecting the presence of markup and using pango_layout_set_markup vs. pango_layout_set_text.
 - Try blitting glyphs directly into a surface or texture by passing a reference to to the pixel data to `cairo_image_surface_create_for_data` instead of creating a new one via `cairo_image_surface_create`.
 - Figure out why some fonts don't load correctly on Mac + CoreText.

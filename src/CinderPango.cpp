@@ -23,6 +23,7 @@ CinderPango::CinderPango()
 		, mNeedsTextRender(false)
 		, mNeedsFontOptionUpdate(false)
 		, mDefaultTextColor(ci::ColorA::black())
+		, mBackgroundColor(ci::ColorA::zero())
 		, mDefaultTextFont("Sans")
 		, mDefaultTextSize(12.0)
 		, mDefaultTextItalicsEnabled(false)
@@ -223,6 +224,17 @@ void CinderPango::setDefaultTextColor(ci::ColorA color) {
 	}
 }
 
+ci::ColorA CinderPango::getBackgroundColor() {
+	return mBackgroundColor;
+}
+
+void CinderPango::setBackgroundColor(ci::ColorA color) {
+	if (mBackgroundColor != color) {
+		mBackgroundColor = color;
+		mNeedsTextRender = true;
+	}
+}
+
 bool CinderPango::getDefaultTextSmallCapsEnabled() {
 	return mDefaultTextSmallCapsEnabled;
 }
@@ -412,10 +424,16 @@ bool CinderPango::render(bool force) {
 		if (force || mNeedsTextRender) {
 			// Render text
 
-			// Clear the context... if it's stale
-			if (!freshCairoSurface) {
+			if ((mBackgroundColor == ci::ColorA::zero()) && !freshCairoSurface) {
+				// Clear the context... if the background is clear and it's not a brand-new surface buffer
 				cairo_save(cairoContext);
 				cairo_set_operator(cairoContext, CAIRO_OPERATOR_CLEAR);
+				cairo_paint(cairoContext);
+				cairo_restore(cairoContext);
+			} else {
+				// Fill the context with the background color
+				cairo_save(cairoContext);
+				cairo_set_source_rgba(cairoContext, mBackgroundColor.r, mBackgroundColor.g, mBackgroundColor.b, mBackgroundColor.a);
 				cairo_paint(cairoContext);
 				cairo_restore(cairoContext);
 			}

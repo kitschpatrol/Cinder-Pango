@@ -94,6 +94,9 @@ public:
 
 	ci::ColorA getDefaultTextColor();
 	void setDefaultTextColor(ci::ColorA color);
+	
+	ci::ColorA getBackgroundColor();
+	void setBackgroundColor(ci::ColorA color);
 
 	float getDefaultTextSize();
 	void setDefaultTextSize(float size);
@@ -116,6 +119,9 @@ public:
 	bool getDefaultTextItalicsEnabled();
 	void setDefaultTextItalicsEnabled(bool value);
 
+	
+	
+	
 	float getSpacing();
 	void setSpacing(float spacing);
 
@@ -141,6 +147,7 @@ private:
 	bool mDefaultTextItalicsEnabled;
 	bool mDefaultTextSmallCapsEnabled;
 	ci::ColorA mDefaultTextColor;
+	ci::ColorA mBackgroundColor;
 	float mDefaultTextSize;
 	TextAlignment mTextAlignment;
 	TextWeight mDefaultTextWeight;
