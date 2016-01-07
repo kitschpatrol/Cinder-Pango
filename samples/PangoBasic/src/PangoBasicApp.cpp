@@ -19,9 +19,9 @@ public:
 };
 
 void PangoBasicApp::setup() {
+	kp::pango::CinderPango::setTextRenderer(kp::pango::TextRenderer::PLATFORM_NATIVE);
 	mPango = kp::pango::CinderPango::create();
 	mPango->setMaxSize(getWindowWidth(), getWindowHeight());
-	// mPango->setTextRenderer(kp::pango::TextRenderer::FREETYPE);
 }
 
 void PangoBasicApp::mouseDown(MouseEvent event) {
@@ -39,36 +39,66 @@ void PangoBasicApp::keyDown(KeyEvent event) {
 				mPango->setTextAntialias(kp::pango::TextAntialias::NONE);
 			}
 			break;
+		case KeyEvent::KEY_UP:
+			mPango->setSpacing(mPango->getSpacing() + 1.0);
+			break;
+		case KeyEvent::KEY_DOWN:
+			mPango->setSpacing(mPango->getSpacing() - 1.0);
+			break;
+		case KeyEvent::KEY_i:
+			mPango->setDefaultTextItalicsEnabled(!mPango->getDefaultTextItalicsEnabled());
+			break;
+		case KeyEvent::KEY_d:
+			mPango = nullptr;
+			break;
+		case KeyEvent::KEY_c:
+			mPango = kp::pango::CinderPango::create();
+			mPango->setMaxSize(getWindowWidth(), getWindowHeight());
+			break;
 
+		case KeyEvent::KEY_r:
+			if (kp::pango::CinderPango::getTextRenderer() == kp::pango::TextRenderer::FREETYPE) {
+				kp::pango::CinderPango::setTextRenderer(kp::pango::TextRenderer::PLATFORM_NATIVE);
+			} else {
+				kp::pango::CinderPango::setTextRenderer(kp::pango::TextRenderer::FREETYPE);
+			}
+
+			// rebuild
+			mPango = kp::pango::CinderPango::create();
+			mPango->setMaxSize(getWindowWidth(), getWindowHeight());
+			break;
 		default:
 			break;
 	}
 }
 
 void PangoBasicApp::update() {
-	mPango->setText(
-			"<b>Bold Text</b> "
-			"<span foreground=\"green\" font=\"24.0\">Green téxt</span> "
-			"<span foreground=\"red\" font=\"Times 48.0\">Red text</span> "
-			"<span foreground=\"blue\" font=\"Verdana 72.0\">Blue text</span> "
-			"<i>Italic Text</i> "
-			"hovedgruppen fra <i>forskjellige</i> destinasjoner. Tilknytningsbillett er gyldig inntil 24 timer f√∏r avreise hovedgruppe.\n\nUnicef said 3m "
-			"people had been affected and more than <span font=\"33.0\">1,400</span> had been killed. <b>The government</b> said some 27,000 people remained "
-			"trapped "
-			"and awaiting help. "
+	if (mPango != nullptr) {
 
-			);
-	//	std::to_string(getElapsedFrames()));
+		mPango->setText(
+				"<b>Bold Text</b> "
+				"<span foreground=\"green\" font=\"24.0\">Green téxt</span> "
+				"<span foreground=\"red\" font=\"Times 48.0\">Red text</span> "
+				"<span foreground=\"blue\" font=\"Gravur Condensed Pro 72.0\">AVAVAVA Blue text</span> "
+				"<i>Italic Text</i> "
+				"hovedgruppen fra <i>forskjellige</i> destinasjoner. Tilknytningsbillett er gyldig inntil 24 timer f√∏r avreise hovedgruppe.\n\nUnicef said 3m "
+				"people had been affected and more than <span font=\"33.0\">1,400</span> had been killed. <b>The government</b> said some 27,000 people remained "
+				"trapped "
+				"and awaiting help. ");
 
-	// Only renders if it needs to
-	mPango->render();
+		//	std::to_string(getElapsedFrames()));
+
+		// Only renders if it needs to
+		mPango->render();
+	}
 }
 
 void PangoBasicApp::draw() {
 	float bgColor = (0.5 + 0.5 * sin(0.5 * getElapsedSeconds()));
 	gl::clear(Color(bgColor, bgColor, bgColor));
-
-	gl::draw(mPango->getTexture());
+	if (mPango != nullptr) {
+		gl::draw(mPango->getTexture());
+	}
 }
 
 CINDER_APP(PangoBasicApp, RendererGl)

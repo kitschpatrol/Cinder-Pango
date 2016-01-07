@@ -25,8 +25,11 @@ CinderPango::CinderPango()
 		, mDefaultTextColor(ci::ColorA::black())
 		, mDefaultTextFont("Sans")
 		, mDefaultTextSize(12.0)
+		, mDefaultTextItalicsEnabled(false)
+		, mDefaultTextSmallCapsEnabled(false)
 		, mMinSize(ci::ivec2(0, 0))
 		, mMaxSize(ci::ivec2(320, 240))
+		, mSpacing(0)
 		, mTextAlignment(TextAlignment::LEFT)
 		, mDefaultTextWeight(TextWeight::NORMAL)
 		, mTextAntialias(TextAntialias::DEFAULT) {
@@ -152,6 +155,18 @@ void CinderPango::setTextAlignment(TextAlignment alignment) {
 	}
 }
 
+float CinderPango::getSpacing() {
+	return mSpacing;
+}
+
+void CinderPango::setSpacing(float spacing) {
+	if (mSpacing != spacing) {
+		mSpacing = spacing;
+		mNeedsMeasuring = true;
+		mNeedsTextRender = true;
+	}
+}
+
 TextAntialias CinderPango::getTextAntialias() {
 	return mTextAntialias;
 }
@@ -208,6 +223,30 @@ void CinderPango::setDefaultTextColor(ci::ColorA color) {
 	}
 }
 
+bool CinderPango::getDefaultTextSmallCapsEnabled() {
+	return mDefaultTextSmallCapsEnabled;
+}
+
+void CinderPango::setDefaultTextSmallCapsEnabled(bool value) {
+	if (mDefaultTextSmallCapsEnabled != value) {
+		mDefaultTextSmallCapsEnabled = value;
+		mNeedsFontUpdate = true;
+		mNeedsMeasuring = true;
+	}
+}
+
+bool CinderPango::getDefaultTextItalicsEnabled() {
+	return mDefaultTextItalicsEnabled;
+}
+
+void CinderPango::setDefaultTextItalicsEnabled(bool value) {
+	if (mDefaultTextItalicsEnabled != value) {
+		mDefaultTextItalicsEnabled = value;
+		mNeedsFontUpdate = true;
+		mNeedsMeasuring = true;
+	}
+}
+
 float CinderPango::getDefaultTextSize() {
 	return mDefaultTextSize;
 }
@@ -243,8 +282,12 @@ bool CinderPango::render(bool force) {
 
 		if (force || mNeedsFontOptionUpdate) {
 			cairo_font_options_set_antialias(cairoFontOptions, static_cast<cairo_antialias_t>(mTextAntialias));
-			cairo_font_options_set_hint_style(cairoFontOptions, CAIRO_HINT_STYLE_FULL);		// hmm
-			cairo_font_options_set_hint_metrics(cairoFontOptions, CAIRO_HINT_METRICS_ON); // hmm
+
+			// TODO, expose these?
+			// cairo_font_options_set_hint_style(cairoFontOptions, CAIRO_HINT_STYLE_DEFAULT);
+			// cairo_font_options_set_hint_metrics(cairoFontOptions, CAIRO_HINT_METRICS_DEFAULT);
+			// cairo_font_options_set_subpixel_order(cairoFontOptions, CAIRO_SUBPIXEL_ORDER_DEFAULT);
+
 			pango_cairo_context_set_font_options(pangoContext, cairoFontOptions);
 
 			mNeedsFontOptionUpdate = false;
@@ -257,8 +300,9 @@ bool CinderPango::render(bool force) {
 
 			fontDescription = pango_font_description_from_string(std::string(mDefaultTextFont + " " + std::to_string(mDefaultTextSize)).c_str());
 			pango_font_description_set_weight(fontDescription, static_cast<PangoWeight>(mDefaultTextWeight));
+			pango_font_description_set_style(fontDescription, mDefaultTextItalicsEnabled ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
+			pango_font_description_set_variant(fontDescription, mDefaultTextSmallCapsEnabled ? PANGO_VARIANT_SMALL_CAPS : PANGO_VARIANT_NORMAL);
 			pango_layout_set_font_description(pangoLayout, fontDescription);
-
 			pango_font_map_load_font(fontMap, pangoContext, fontDescription);
 
 			mNeedsFontUpdate = false;
@@ -276,7 +320,19 @@ bool CinderPango::render(bool force) {
 
 			pango_layout_set_width(pangoLayout, mMaxSize.x * PANGO_SCALE);
 			pango_layout_set_height(pangoLayout, mMaxSize.y * PANGO_SCALE);
-			pango_layout_set_alignment(pangoLayout, static_cast<PangoAlignment>(mTextAlignment));
+
+			// Pango separates alignment and justification... I prefer a simpler API here to handling certain edge cases.
+			if (mTextAlignment == TextAlignment::JUSTIFY) {
+				pango_layout_set_justify(pangoLayout, true);
+				pango_layout_set_alignment(pangoLayout, static_cast<PangoAlignment>(TextAlignment::LEFT));
+			} else {
+				pango_layout_set_justify(pangoLayout, false);
+				pango_layout_set_alignment(pangoLayout, static_cast<PangoAlignment>(mTextAlignment));
+			}
+
+			pango_layout_set_wrap(pangoLayout, PANGO_WRAP_CHAR);
+
+			pango_layout_set_spacing(pangoLayout, mSpacing * PANGO_SCALE);
 
 			// Set text
 			pango_layout_set_markup(pangoLayout, mText.c_str(), -1);
@@ -302,9 +358,10 @@ bool CinderPango::render(bool force) {
 		}
 
 		// Create Cairo surface buffer to draw glyphs into
+		// Force this is we need to render but don't have a surface yet
 		bool freshCairoSurface = false;
 
-		if (force || needsSurfaceResize) {
+		if (force || needsSurfaceResize || (mNeedsTextRender && (cairoSurface == NULL))) {
 			// Create appropriately sized cairo surface
 			const bool grayscale = false; // Not really supported
 			_cairo_format cairoFormat = grayscale ? CAIRO_FORMAT_A8 : CAIRO_FORMAT_ARGB32;
@@ -339,7 +396,6 @@ bool CinderPango::render(bool force) {
 			cairo_translate(cairoContext, 0.0f, -pixelHeight);
 			cairo_move_to(cairoContext, 0, 0); // needed?
 
-			needsSurfaceResize = false;
 			mNeedsTextRender = true;
 			freshCairoSurface = true;
 		}
@@ -382,7 +438,7 @@ void CinderPango::setTextRenderer(kp::pango::TextRenderer renderer) {
 		case TextRenderer::PLATFORM_NATIVE:
 #if defined(CINDER_MSW)
 			rendererName = "win32";
-#elseif defined(CINDER_MAC)
+#elif defined(CINDER_MAC)
 			rendererName = "coretext";
 #else
 			CI_LOG_E("Setting Pango text renderer not supported on this platform.");
@@ -394,11 +450,16 @@ void CinderPango::setTextRenderer(kp::pango::TextRenderer renderer) {
 	}
 
 	if (rendererName != "") {
-		setenv("PANGOCAIRO_BACKEND", rendererName.c_str(), 0); // this fixes some font issues on  mac
+		int status = setenv("PANGOCAIRO_BACKEND", rendererName.c_str(), 1); // this fixes some font issues on  mac
+		if (status == 0) {
+			CI_LOG_V("Set Pango Cairo backend renderer to: " << rendererName);
+		} else {
+			CI_LOG_E("Error setting Pango Cairo backend environment variable.");
+		}
 	}
 }
 
-TextRenderer getTextRenderer() {
+TextRenderer CinderPango::getTextRenderer() {
 	const char *rendererName = std::getenv("PANGOCAIRO_BACKEND");
 
 	if (rendererName == nullptr) {
