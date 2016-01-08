@@ -445,7 +445,14 @@ bool CinderPango::render(bool force) {
 
 			// Copy it out to a texture
 			unsigned char *pixels = cairo_image_surface_get_data(cairoSurface);
-			mTexture = ci::gl::Texture2d::create(pixels, GL_BGRA, pixelWidth, pixelHeight);
+
+			if (mTexture == nullptr || (mTexture->getWidth() != pixelWidth) || (mTexture->getHeight() != pixelHeight)) {
+				// Create a new texture if needed
+				mTexture = ci::gl::Texture2d::create(pixels, GL_BGRA, pixelWidth, pixelHeight);
+			} else {
+				// Update the existing texture
+				mTexture->update(pixels, GL_BGRA, GL_UNSIGNED_BYTE, 0, pixelWidth, pixelHeight);
+			}
 
 			mNeedsTextRender = false;
 		}
