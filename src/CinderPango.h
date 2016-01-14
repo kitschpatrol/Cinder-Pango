@@ -7,8 +7,11 @@
 #pragma once
 
 #include "cinder/Cinder.h"
+#include "cinder/gl/gl.h"
 #include <fontconfig/fontconfig.h>
 #include <pango/pangocairo.h>
+
+#include <vector>
 
 namespace kp {
 namespace pango {

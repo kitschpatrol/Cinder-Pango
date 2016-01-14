@@ -484,7 +484,14 @@ void CinderPango::setTextRenderer(kp::pango::TextRenderer renderer) {
 	}
 
 	if (rendererName != "") {
+#ifdef CINDER_MSW
+		int status = _putenv_s("PANGOCAIRO_BACKEND", rendererName.c_str());
+#else
 		int status = setenv("PANGOCAIRO_BACKEND", rendererName.c_str(), 1); // this fixes some font issues on  mac
+
+#endif
+
+
 		if (status == 0) {
 			CI_LOG_V("Set Pango Cairo backend renderer to: " << rendererName);
 		} else {
