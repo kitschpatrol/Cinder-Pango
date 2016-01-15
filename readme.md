@@ -49,6 +49,17 @@ Tinderbox enables the /gm flag in Visual Studio projects by default, which will 
 
 There's an issue with the GTK DLLs afflicting Win32 bit builds. Win32 is currently not supported.
 
+### Windows
+
+The environmental variable set by setTextRenderer doesn't seem to do anything on Windows. Instead, I think rendering is determined by the type of cairo surface you draw into. The win32 surface support is compiled into Cinder's core Cairo block, but isn't present in the DLLs included in this library. Currently, if you import Cinder's cairo block before importing CinderPango, then CinderPango will automatically use win32 surfaces instead of what (I assume) is the freetype backend to blit the glyphs.
+
+Font loading from a local file doesn't work (yet) on Windows. You have to install any fonts you'd like to use at the system level.
+
+There are some issues with text rendering quality on Windows that I'm trying to work through.
+
+On Windows, antialiasing and some other properties have no effect.
+
+
 ## Dependencies
 
 **All dependencies are included in the block.**
@@ -70,7 +81,10 @@ Windows 64 bit libs procured via [gtk+-bundle_3.6.4-20130513_win64.zip](http://w
 Windows 32 bit libs from here and there, currently not working.
 
 ##TODO
-- Wrap more of the API. (Hyphenation, etc.)
+- Consolidate renderer property across platforms.
+- Windows local font loading.
+- Document and warn about platform-invalid parameters. (E.g. anti-alaising settings on Windows.)
+- Wrap more of the API. (Hyphenation, hinting, etc.)
 - Wrap certain attributes normally relegated to markup... letterspacing, underline, etc?
 - High DPI stuff.
 - Possible efficiencies from detecting the presence of markup and using pango_layout_set_markup vs. pango_layout_set_text.
