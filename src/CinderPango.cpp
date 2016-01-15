@@ -412,22 +412,11 @@ bool CinderPango::render(bool force) {
 				cairo_surface_destroy(cairoSurface);
 			}
 
-
-
-
-			if (this->m)
-
-#if CAIRO_HAS_WIN32_SURFACE
+			#if CAIRO_HAS_WIN32_SURFACE
 			cairoSurface = cairo_win32_surface_create_with_dib(cairoFormat, pixelWidth, pixelHeight);
-#else
+			#else
 			cairoSurface = cairo_image_surface_create(cairoFormat, pixelWidth, pixelHeight);
-
-#endif
-
-
-		
-			
-
+			#endif
 
 			if (CAIRO_STATUS_SUCCESS != cairo_surface_status(cairoSurface)) {
 				CI_LOG_E("Error creating Cairo surface.");
