@@ -8,6 +8,11 @@
 
 #include "cinder/Cinder.h"
 #include "cinder/gl/gl.h"
+
+#include "cinder/cairo/Cairo.h"
+
+
+
 #include <fontconfig/fontconfig.h>
 #include <pango/pangocairo.h>
 
@@ -172,6 +177,10 @@ private:
 	cairo_surface_t *cairoSurface;
 	cairo_t *cairoContext;
 	cairo_font_options_t *cairoFontOptions;
+
+	#ifdef CAIRO_HAS_WIN32_SURFACE
+	cairo_surface_t *cairoImageSurface;
+	#endif
 };
 }
 } // namespace kp::pango

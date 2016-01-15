@@ -8,6 +8,10 @@
 
 #include "CinderPango.h"
 
+#if CAIRO_HAS_WIN32_SURFACE
+#include <cairo-win32.h>
+#endif
+
 using namespace kp::pango;
 
 #pragma mark - Lifecycle
@@ -62,6 +66,11 @@ CinderPango::CinderPango()
 
 	// Initialize Cairo surface and context, will be instantiated on demand
 	cairoSurface = nullptr;
+
+	#ifdef CAIRO_HAS_WIN32_SURFACE
+	cairoImageSurface = nullptr;
+	#endif
+
 	cairoContext = nullptr;
 
 	// TODO pass these in.....
@@ -83,13 +92,23 @@ CinderPango::CinderPango()
 
 CinderPango::~CinderPango() {
 	CI_LOG_V("CinderPango Destroyed");
-	g_object_unref(pangoLayout);
-	g_object_unref(fontMap);
-	g_object_unref(pangoContext);
 
+	g_object_unref(pangoLayout);
+	g_object_unref(pangoContext);
+	/*
+	// This causes crashes on windows?
+	g_object_unref(fontMap);
+
+	*/
 	if (cairoSurface != nullptr) {
 		cairo_surface_destroy(cairoSurface);
 	}
+
+	#ifdef CAIRO_HAS_WIN32_SURFACE
+	if (cairoImageSurface != nullptr) {
+		cairo_surface_destroy(cairoImageSurface);
+	}
+	#endif
 
 	if (cairoContext != nullptr) {
 		cairo_destroy(cairoContext);
@@ -102,6 +121,7 @@ CinderPango::~CinderPango() {
 	if (cairoFontOptions != nullptr) {
 		cairo_font_options_destroy(cairoFontOptions);
 	}
+
 }
 
 #pragma mark - Getters / Setters
@@ -296,8 +316,8 @@ bool CinderPango::render(bool force) {
 			cairo_font_options_set_antialias(cairoFontOptions, static_cast<cairo_antialias_t>(mTextAntialias));
 
 			// TODO, expose these?
-			// cairo_font_options_set_hint_style(cairoFontOptions, CAIRO_HINT_STYLE_DEFAULT);
-			// cairo_font_options_set_hint_metrics(cairoFontOptions, CAIRO_HINT_METRICS_DEFAULT);
+			cairo_font_options_set_hint_style(cairoFontOptions, CAIRO_HINT_STYLE_FULL);
+			cairo_font_options_set_hint_metrics(cairoFontOptions, CAIRO_HINT_METRICS_ON);
 			// cairo_font_options_set_subpixel_order(cairoFontOptions, CAIRO_SUBPIXEL_ORDER_DEFAULT);
 
 			pango_cairo_context_set_font_options(pangoContext, cairoFontOptions);
@@ -392,7 +412,22 @@ bool CinderPango::render(bool force) {
 				cairo_surface_destroy(cairoSurface);
 			}
 
+
+
+
+			if (this->m)
+
+#if CAIRO_HAS_WIN32_SURFACE
+			cairoSurface = cairo_win32_surface_create_with_dib(cairoFormat, pixelWidth, pixelHeight);
+#else
 			cairoSurface = cairo_image_surface_create(cairoFormat, pixelWidth, pixelHeight);
+
+#endif
+
+
+		
+			
+
 
 			if (CAIRO_STATUS_SUCCESS != cairo_surface_status(cairoSurface)) {
 				CI_LOG_E("Error creating Cairo surface.");
@@ -444,7 +479,12 @@ bool CinderPango::render(bool force) {
 			pango_cairo_show_layout(cairoContext, pangoLayout);
 
 			// Copy it out to a texture
+			#ifdef CAIRO_HAS_WIN32_SURFACE
+			cairoImageSurface = cairo_win32_surface_get_image(cairoSurface);
+			unsigned char *pixels = cairo_image_surface_get_data(cairoImageSurface);
+			#else
 			unsigned char *pixels = cairo_image_surface_get_data(cairoSurface);
+			#endif
 
 			if (mTexture == nullptr || (mTexture->getWidth() != pixelWidth) || (mTexture->getHeight() != pixelHeight)) {
 				// Create a new texture if needed
@@ -488,10 +528,7 @@ void CinderPango::setTextRenderer(kp::pango::TextRenderer renderer) {
 		int status = _putenv_s("PANGOCAIRO_BACKEND", rendererName.c_str());
 #else
 		int status = setenv("PANGOCAIRO_BACKEND", rendererName.c_str(), 1); // this fixes some font issues on  mac
-
 #endif
-
-
 		if (status == 0) {
 			CI_LOG_V("Set Pango Cairo backend renderer to: " << rendererName);
 		} else {
@@ -528,6 +565,9 @@ void CinderPango::loadFont(const ci::fs::path &path) {
 
 	if (!fontAddStatus) {
 		CI_LOG_E("Pango failed to load font from file \"" << path << "\"");
+	}
+	else {
+		CI_LOG_V("Pango thinks it loaded font " << path << " with status " << fontAddStatus);
 	}
 }
 
