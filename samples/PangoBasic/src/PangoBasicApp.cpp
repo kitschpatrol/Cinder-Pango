@@ -105,6 +105,8 @@ void PangoBasicApp::update() {
 void PangoBasicApp::draw() {
 	float bgColor = (0.5 + 0.5 * sin(0.5 * getElapsedSeconds()));
 	gl::clear(Color(bgColor, bgColor, bgColor));
+	gl::enableAlphaBlendingPremult();
+
 	if (mPango != nullptr) {
 		gl::draw(mPango->getTexture());
 	}

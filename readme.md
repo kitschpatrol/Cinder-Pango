@@ -15,6 +15,9 @@ This block was inspired by the [openFrameworks](http://openframeworks.cc) addon 
 
 Thanks to [Oriol Ferrer Mesià](http://uri.cat/), [Diederick Huijbers](http://www.roxlu.com), [Matthias Rohrbach](http://www.robandrose.ch), and others.
 
+## Tips
+
+Alpha channels in textures returned from Cinder-Pango are premultiplied. Call `gl::enableAlphaBlendingPremult();` before drawing the texture. If you're seeing strange artifacts around text on different colored backgrounds, this is probably why.
 
 ## Compatibility
 
@@ -86,6 +89,7 @@ Windows 32 bit libs from here and there, currently not working.
 - Document and warn about platform-invalid parameters. (E.g. anti-alaising settings on Windows.)
 - Wrap more of the API. (Hyphenation, hinting, etc.)
 - Wrap certain attributes normally relegated to markup... letterspacing, underline, etc?
+- Make alpha optional.
 - High DPI stuff.
 - Possible efficiencies from detecting the presence of markup and using pango_layout_set_markup vs. pango_layout_set_text.
 - Try blitting glyphs directly into a surface or texture by passing a reference to to the pixel data to `cairo_image_surface_create_for_data` instead of creating a new one via `cairo_image_surface_create`.

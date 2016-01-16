@@ -9,9 +9,9 @@
 #include "cinder/Cinder.h"
 #include "cinder/gl/gl.h"
 
+#ifdef CINDER_MSW
 #include "cinder/cairo/Cairo.h"
-
-
+#endif
 
 #include <fontconfig/fontconfig.h>
 #include <pango/pangocairo.h>
@@ -102,7 +102,7 @@ public:
 
 	ci::ColorA getDefaultTextColor();
 	void setDefaultTextColor(ci::ColorA color);
-	
+
 	ci::ColorA getBackgroundColor();
 	void setBackgroundColor(ci::ColorA color);
 
@@ -127,9 +127,6 @@ public:
 	bool getDefaultTextItalicsEnabled();
 	void setDefaultTextItalicsEnabled(bool value);
 
-	
-	
-	
 	float getSpacing();
 	void setSpacing(float spacing);
 
@@ -178,9 +175,9 @@ private:
 	cairo_t *cairoContext;
 	cairo_font_options_t *cairoFontOptions;
 
-	#ifdef CAIRO_HAS_WIN32_SURFACE
+#ifdef CAIRO_HAS_WIN32_SURFACE
 	cairo_surface_t *cairoImageSurface;
-	#endif
+#endif
 };
 }
 } // namespace kp::pango
