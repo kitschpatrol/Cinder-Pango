@@ -64,7 +64,7 @@ typedef std::shared_ptr<class CinderPango> CinderPangoRef;
 class CinderPango : public std::enable_shared_from_this<CinderPango> {
 public:
 	static CinderPangoRef create();
-	~CinderPango();
+	virtual ~CinderPango();
 
 	// Globals
 	static std::vector<std::string> getFontList();

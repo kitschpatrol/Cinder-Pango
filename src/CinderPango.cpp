@@ -38,8 +38,6 @@ CinderPango::CinderPango()
 		, mTextAlignment(TextAlignment::LEFT)
 		, mDefaultTextWeight(TextWeight::NORMAL)
 		, mTextAntialias(TextAntialias::DEFAULT) {
-	CI_LOG_V("CinderPango Created");
-
 	// Create Font Map for reuse
 	fontMap = nullptr;
 	fontMap = pango_cairo_font_map_new();
@@ -91,25 +89,7 @@ CinderPango::CinderPango()
 }
 
 CinderPango::~CinderPango() {
-	CI_LOG_V("CinderPango Destroyed");
-
-	g_object_unref(pangoLayout);
-	g_object_unref(pangoContext);
-	/*
-	// This causes crashes on windows?
-	g_object_unref(fontMap);
-
-	*/
-	if (cairoSurface != nullptr) {
-		cairo_surface_destroy(cairoSurface);
-	}
-
-	#ifdef CAIRO_HAS_WIN32_SURFACE
-	if (cairoImageSurface != nullptr) {
-		cairo_surface_destroy(cairoImageSurface);
-	}
-	#endif
-
+	// This causes crash on windows
 	if (cairoContext != nullptr) {
 		cairo_destroy(cairoContext);
 	}
@@ -122,6 +102,21 @@ CinderPango::~CinderPango() {
 		cairo_font_options_destroy(cairoFontOptions);
 	}
 
+
+	#ifdef CAIRO_HAS_WIN32_SURFACE
+	if (cairoImageSurface != nullptr) {
+		cairo_surface_destroy(cairoImageSurface);
+	}
+	#else
+	// Crashes windows...
+	if (cairoSurface != nullptr) {
+		cairo_surface_destroy(cairoSurface);
+	}
+	#endif
+
+	//g_object_unref(pangoContext); // this one crashes Windows?
+	g_object_unref(fontMap);
+	g_object_unref(pangoLayout);
 }
 
 #pragma mark - Getters / Setters
