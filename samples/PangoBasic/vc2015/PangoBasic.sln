@@ -1,24 +1,35 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PangoBasic", "PangoBasic.vcxproj", "{5E2A3F97-E3DF-490D-A290-293B4650879D}"
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PangoBasic", "PangoBasic.vcxproj", "{7510489C-6068-4E3A-BE81-C878BFA40F7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_ANGLE|Win32 = Debug_ANGLE|Win32
+		Debug_ANGLE|x64 = Debug_ANGLE|x64
 		Debug|Win32 = Debug|Win32
-		Release|Win32 = Release|Win32
 		Debug|x64 = Debug|x64
+		Release_ANGLE|Win32 = Release_ANGLE|Win32
+		Release_ANGLE|x64 = Release_ANGLE|x64
+		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5E2A3F97-E3DF-490D-A290-293B4650879D}.Debug|Win32.ActiveCfg = Debug|Win32
-		{5E2A3F97-E3DF-490D-A290-293B4650879D}.Debug|Win32.Build.0 = Debug|Win32
-		{5E2A3F97-E3DF-490D-A290-293B4650879D}.Release|Win32.ActiveCfg = Release|Win32
-		{5E2A3F97-E3DF-490D-A290-293B4650879D}.Release|Win32.Build.0 = Release|Win32
-		{5E2A3F97-E3DF-490D-A290-293B4650879D}.Debug|x64.ActiveCfg = Debug|x64
-		{5E2A3F97-E3DF-490D-A290-293B4650879D}.Debug|x64.Build.0 = Debug|x64
-		{5E2A3F97-E3DF-490D-A290-293B4650879D}.Release|x64.ActiveCfg = Release|x64
-		{5E2A3F97-E3DF-490D-A290-293B4650879D}.Release|x64.Build.0 = Release|x64
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Debug_ANGLE|Win32.ActiveCfg = Debug_ANGLE|Win32
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Debug_ANGLE|Win32.Build.0 = Debug_ANGLE|Win32
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Debug_ANGLE|x64.ActiveCfg = Debug_ANGLE|Win32
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Debug|Win32.Build.0 = Debug|Win32
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Debug|x64.ActiveCfg = Debug|x64
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Debug|x64.Build.0 = Debug|x64
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Release_ANGLE|Win32.ActiveCfg = Release_ANGLE|Win32
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Release_ANGLE|Win32.Build.0 = Release_ANGLE|Win32
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Release_ANGLE|x64.ActiveCfg = Release_ANGLE|Win32
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Release|Win32.ActiveCfg = Release|Win32
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Release|Win32.Build.0 = Release|Win32
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Release|x64.ActiveCfg = Release|x64
+		{7510489C-6068-4E3A-BE81-C878BFA40F7A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

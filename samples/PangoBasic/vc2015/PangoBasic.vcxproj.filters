@@ -13,13 +13,28 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
     <Filter Include="Blocks">
-      <UniqueIdentifier>{EA50763E-F421-4098-A62A-A999B89A2AFD}</UniqueIdentifier>
+      <UniqueIdentifier>{671061E1-A399-44A9-A945-64E708D9D70B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cairo">
+      <UniqueIdentifier>{664FC8E9-7CA7-4DE6-AA60-99B91B2D7EEB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cairo\src">
+      <UniqueIdentifier>{B2B5348B-C38D-4559-AFC4-8092F3F9F3C3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cairo\include">
+      <UniqueIdentifier>{73353437-922A-40AE-8825-EB7FF54CF646}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cairo\include\cinder">
+      <UniqueIdentifier>{4D1C8492-FE9D-41D7-903E-BE6DA62A1B32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cairo\include\cinder\cairo">
+      <UniqueIdentifier>{A1C28ED8-A1A3-4FFC-B87F-73C7FEF6EEAC}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Pango">
-      <UniqueIdentifier>{CFC2D028-DD70-415C-8D04-1D7DA035A5DA}</UniqueIdentifier>
+      <UniqueIdentifier>{29FD19F7-195D-4042-86FF-2FCFF35BB467}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Pango\src">
-      <UniqueIdentifier>{A4D252D7-5C9F-473D-B00C-4712C1E8AD1A}</UniqueIdentifier>
+      <UniqueIdentifier>{7776970E-06FB-444D-A8FF-7DA86E8E0633}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -32,34 +47,16 @@
     <ClInclude Include="..\include\Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\CairoContext.h">
-      <Filter>Blocks\Pango\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\CairoSurface.h">
-      <Filter>Blocks\Pango\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\FontDescription.h">
-      <Filter>Blocks\Pango\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Layout.h">
-      <Filter>Blocks\Pango\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Pango.h">
-      <Filter>Blocks\Pango\src</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\..\src\CairoContext.cpp">
-      <Filter>Blocks\Pango\src</Filter>
+    <ClCompile Include="..\..\..\..\Cairo\src\Cairo.cpp">
+      <Filter>Blocks\Cairo\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\CairoSurface.cpp">
+    <ClInclude Include="..\..\..\..\Cairo\include\cinder\cairo\Cairo.h">
+      <Filter>Blocks\Cairo\include\cinder\cairo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\CinderPango.h">
       <Filter>Blocks\Pango\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\FontDescription.cpp">
-      <Filter>Blocks\Pango\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Layout.cpp">
-      <Filter>Blocks\Pango\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Pango.cpp">
+    </ClInclude>
+    <ClCompile Include="..\..\..\src\CinderPango.cpp">
       <Filter>Blocks\Pango\src</Filter>
     </ClCompile>
   </ItemGroup>
