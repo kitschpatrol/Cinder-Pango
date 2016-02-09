@@ -90,6 +90,7 @@ Windows 32 bit libs from here and there, currently not working.
 - Wrap more of the API. (Hyphenation, hinting, etc.)
 - Wrap certain attributes normally relegated to markup... letterspacing, underline, etc?
 - Make alpha optional.
+- Cross-platform font size unification like Cinder's font system? See pango_cairo_context_set_resolution.
 - High DPI stuff.
 - Possible efficiencies from detecting the presence of markup and using pango_layout_set_markup vs. pango_layout_set_text.
 - Try blitting glyphs directly into a surface or texture by passing a reference to to the pixel data to `cairo_image_surface_create_for_data` instead of creating a new one via `cairo_image_surface_create`.
