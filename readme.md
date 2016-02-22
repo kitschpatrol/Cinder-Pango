@@ -84,6 +84,7 @@ Windows 64 bit libs procured via [gtk+-bundle_3.6.4-20130513_win64.zip](http://w
 Windows 32 bit libs from here and there, currently not working.
 
 ##TODO
+- Fix libraries for 32 bit Mac.
 - Consolidate renderer property across platforms.
 - Windows local font loading.
 - Document and warn about platform-invalid parameters. (E.g. anti-alaising settings on Windows.)
