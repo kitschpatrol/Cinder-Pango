@@ -7,6 +7,7 @@
 #include "cinder/Log.h"
 
 #include "CinderPango.h"
+#include <regex>
 
 #if CAIRO_HAS_WIN32_SURFACE
 #include <cairo-win32.h>
@@ -22,10 +23,13 @@ CinderPangoRef CinderPango::create() {
 
 CinderPango::CinderPango()
 		: mText("")
+		, mProcessedText("")
+		, mNeedsMarkupDetection(false)
 		, mNeedsFontUpdate(false)
 		, mNeedsMeasuring(false)
 		, mNeedsTextRender(false)
 		, mNeedsFontOptionUpdate(false)
+		, mProbablyHasMarkup(false)
 		, mDefaultTextColor(ci::ColorA::black())
 		, mBackgroundColor(ci::ColorA::zero())
 		, mDefaultTextFont("Sans")
@@ -128,6 +132,7 @@ const std::string CinderPango::getText() {
 void CinderPango::setText(std::string text) {
 	if (text != mText) {
 		mText = text;
+		mNeedsMarkupDetection = true;
 		mNeedsMeasuring = true;
 		mNeedsTextRender = true;
 	}
@@ -301,9 +306,24 @@ void CinderPango::setDefaultTextFont(std::string font) {
 #pragma mark - Pango Bridge
 
 bool CinderPango::render(bool force) {
-	if (force || mNeedsFontUpdate || mNeedsMeasuring || mNeedsTextRender) {
+	if (force || mNeedsFontUpdate || mNeedsMeasuring || mNeedsTextRender || mNeedsMarkupDetection) {
 
 		// Set options
+
+		if (force || mNeedsMarkupDetection) {
+			// Pango doesn't support HTML-esque line-break tags, so
+			// find break marks and replace with newlines, e.g. <br>, <BR>, <br />, <BR />
+			std::regex e("<br\\s?/?>", std::regex_constants::icase);
+			mProcessedText = std::regex_replace(mText, e, "\n");
+
+			// Let's also decide and flag if there's markup in this string
+			// Faster to use pango_layout_set_text than pango_layout_set_markup later on if
+			// there's no markup to bother with.
+			// Be pretty liberal, there's more harm in false-postives than false-negatives
+			mProbablyHasMarkup = ((mProcessedText.find("<") != std::string::npos) && (mProcessedText.find(">") != std::string::npos));
+
+			mNeedsMarkupDetection = false;
+		}
 
 		// First run, and then if the fonts change
 
@@ -371,9 +391,13 @@ bool CinderPango::render(bool force) {
 			// pango_layout_set_attributes(pangoLayout, attributeList);
 			// pango_attr_list_unref(attributeList);
 
-			// Set text
-			pango_layout_set_markup(pangoLayout, mText.c_str(), -1);
-			// pango_layout_set_text(pangoLayout, mText.c_str(), -1); // todo faster if we know there's no markup?
+			// Set text, use the fastest method depending on what we found in the text			
+			if (mProbablyHasMarkup) {
+				pango_layout_set_markup(pangoLayout, mProcessedText.c_str(), -1);
+			}
+			else {
+				pango_layout_set_text(pangoLayout, mProcessedText.c_str(), -1);
+			}
 
 			// Measure text
 			int newPixelWidth = 0;

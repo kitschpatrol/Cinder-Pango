@@ -144,6 +144,8 @@ protected:
 private:
 	ci::gl::TextureRef mTexture;
 	std::string mText;
+	std::string mProcessedText; // stores text after newline filtering
+	bool mProbablyHasMarkup;
 	ci::ivec2 mMinSize;
 	ci::ivec2 mMaxSize;
 
@@ -165,6 +167,7 @@ private:
 	bool mNeedsMeasuring;
 	bool mNeedsTextRender;
 	bool mNeedsFontOptionUpdate;
+	bool mNeedsMarkupDetection;
 
 	// Pango references
 	PangoFontMap *fontMap;
