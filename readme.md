@@ -84,7 +84,6 @@ Windows 64 bit libs procured via [gtk+-bundle_3.6.4-20130513_win64.zip](http://w
 Windows 32 bit libs from here and there, currently not working.
 
 ##TODO
-- Fix libraries for 32 bit Mac.
 - Consolidate renderer property across platforms.
 - Windows local font loading.
 - Document and warn about platform-invalid parameters. (E.g. anti-alaising settings on Windows.)
@@ -93,8 +92,8 @@ Windows 32 bit libs from here and there, currently not working.
 - Make alpha optional.
 - Cross-platform font size unification like Cinder's font system? See pango_cairo_context_set_resolution.
 - High DPI stuff.
-- Possible efficiencies from detecting the presence of markup and using pango_layout_set_markup vs. pango_layout_set_text.
 - Try blitting glyphs directly into a surface or texture by passing a reference to to the pixel data to `cairo_image_surface_create_for_data` instead of creating a new one via `cairo_image_surface_create`.
 - Figure out why some fonts don't load correctly on Mac + CoreText.
 - Use the Cinder Cairo block instead of including Cairo.
 - 32 bit Windows support. (Some issue with the GTK DLLs.)
+- Fix libraries for 32 bit Mac.
