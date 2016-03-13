@@ -613,7 +613,7 @@ std::vector<std::string> CinderPango::getFontList(bool verbose) {
 				PangoFontDescription *description = pango_font_face_describe(face);
 				const char *description_string = pango_font_description_to_string(description);
 				PangoWeight weight = pango_font_description_get_weight(description);
-				uint hash = pango_font_description_hash(description);
+				uint32_t hash = pango_font_description_hash(description);
 
 				CI_LOG_V("\tFace " << i << ": " << face_name);
 				CI_LOG_V("\t\tDescription: " << description_string);
