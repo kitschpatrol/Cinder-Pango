@@ -41,7 +41,9 @@ CinderPango::CinderPango()
 		, mSpacing(0)
 		, mTextAlignment(TextAlignment::LEFT)
 		, mDefaultTextWeight(TextWeight::NORMAL)
-		, mTextAntialias(TextAntialias::DEFAULT) {
+		, mTextAntialias(TextAntialias::DEFAULT)
+		, mPixelWidth(-1)
+		, mPixelHeight(-1) {
 	// Create Font Map for reuse
 	fontMap = nullptr;
 	fontMap = pango_cairo_font_map_new();
@@ -354,15 +356,14 @@ bool CinderPango::render(bool force) {
 			mNeedsFontUpdate = false;
 		}
 
-		static int pixelWidth = -1;
-		static int pixelHeight = -1;
+
 		bool needsSurfaceResize = false;
 
 		// If the text or the bounds change
 		if (force || mNeedsMeasuring) {
 
-			const int lastPixelWidth = pixelWidth;
-			const int lastPixelHeight = pixelHeight;
+			const int lastPixelWidth = mPixelWidth;
+			const int lastPixelHeight = mPixelHeight;
 
 			pango_layout_set_width(pangoLayout, mMaxSize.x * PANGO_SCALE);
 			pango_layout_set_height(pangoLayout, mMaxSize.y * PANGO_SCALE);
@@ -403,11 +404,11 @@ bool CinderPango::render(bool force) {
 
 			pango_layout_get_pixel_size(pangoLayout, &newPixelWidth, &newPixelHeight);
 
-			pixelWidth = glm::clamp(newPixelWidth, mMinSize.x, mMaxSize.x);
-			pixelHeight = glm::clamp(newPixelHeight, mMinSize.y, mMaxSize.y);
+			mPixelWidth = glm::clamp(newPixelWidth, mMinSize.x, mMaxSize.x);
+			mPixelHeight = glm::clamp(newPixelHeight, mMinSize.y, mMaxSize.y);
 
 			// Check for change, need to re-render if there's a change
-			if ((pixelWidth != lastPixelWidth) || (pixelHeight != lastPixelHeight)) {
+			if ((mPixelWidth != lastPixelWidth) || (mPixelHeight != lastPixelHeight)) {
 				// Dimensions changed, re-draw text
 				needsSurfaceResize = true;
 			}
@@ -430,7 +431,7 @@ bool CinderPango::render(bool force) {
 			}
 
 #if CAIRO_HAS_WIN32_SURFACE
-			cairoSurface = cairo_win32_surface_create_with_dib(cairoFormat, pixelWidth, pixelHeight);
+			cairoSurface = cairo_win32_surface_create_with_dib(cairoFormat, mPixelWidth, mPixelHeight);
 #else
 			cairoSurface = cairo_image_surface_create(cairoFormat, pixelWidth, pixelHeight);
 #endif
@@ -455,7 +456,7 @@ bool CinderPango::render(bool force) {
 
 			// Flip vertically
 			cairo_scale(cairoContext, 1.0f, -1.0f);
-			cairo_translate(cairoContext, 0.0f, -pixelHeight);
+			cairo_translate(cairoContext, 0.0f, -mPixelHeight);
 			cairo_move_to(cairoContext, 0, 0); // needed?
 
 			mNeedsTextRender = true;
@@ -492,12 +493,12 @@ bool CinderPango::render(bool force) {
 			unsigned char *pixels = cairo_image_surface_get_data(cairoSurface);
 #endif
 
-			if (mTexture == nullptr || (mTexture->getWidth() != pixelWidth) || (mTexture->getHeight() != pixelHeight)) {
+			if (mTexture == nullptr || (mTexture->getWidth() != mPixelWidth) || (mTexture->getHeight() != mPixelHeight)) {
 				// Create a new texture if needed
-				mTexture = ci::gl::Texture2d::create(pixels, GL_BGRA, pixelWidth, pixelHeight);
+				mTexture = ci::gl::Texture2d::create(pixels, GL_BGRA, mPixelWidth, mPixelHeight);
 			} else {
 				// Update the existing texture
-				mTexture->update(pixels, GL_BGRA, GL_UNSIGNED_BYTE, 0, pixelWidth, pixelHeight);
+				mTexture->update(pixels, GL_BGRA, GL_UNSIGNED_BYTE, 0, mPixelWidth, mPixelHeight);
 			}
 
 			mNeedsTextRender = false;

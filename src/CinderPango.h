@@ -169,6 +169,10 @@ private:
 	bool mNeedsFontOptionUpdate;
 	bool mNeedsMarkupDetection;
 
+	// simply stored to check for change across renders
+	int mPixelWidth;
+	int mPixelHeight;
+
 	// Pango references
 	PangoFontMap *fontMap;
 	PangoContext *pangoContext;
