@@ -67,8 +67,8 @@ public:
 	virtual ~CinderPango();
 
 	// Globals
-	static std::vector<std::string> getFontList();
-	static void logFontList();
+	static std::vector<std::string> getFontList(bool verbose);
+	static void logFontList(bool verbose = false);
 	static void loadFont(const ci::fs::path &path);
 	static TextRenderer getTextRenderer();
 	static void setTextRenderer(TextRenderer renderer);

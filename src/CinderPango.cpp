@@ -69,9 +69,9 @@ CinderPango::CinderPango()
 	// Initialize Cairo surface and context, will be instantiated on demand
 	cairoSurface = nullptr;
 
-	#ifdef CAIRO_HAS_WIN32_SURFACE
+#ifdef CAIRO_HAS_WIN32_SURFACE
 	cairoImageSurface = nullptr;
-	#endif
+#endif
 
 	cairoContext = nullptr;
 
@@ -106,19 +106,18 @@ CinderPango::~CinderPango() {
 		cairo_font_options_destroy(cairoFontOptions);
 	}
 
-
-	#ifdef CAIRO_HAS_WIN32_SURFACE
+#ifdef CAIRO_HAS_WIN32_SURFACE
 	if (cairoImageSurface != nullptr) {
 		cairo_surface_destroy(cairoImageSurface);
 	}
-	#else
+#else
 	// Crashes windows...
 	if (cairoSurface != nullptr) {
 		cairo_surface_destroy(cairoSurface);
 	}
-	#endif
+#endif
 
-	//g_object_unref(pangoContext); // this one crashes Windows?
+	// g_object_unref(pangoContext); // this one crashes Windows?
 	g_object_unref(fontMap);
 	g_object_unref(pangoLayout);
 }
@@ -391,11 +390,10 @@ bool CinderPango::render(bool force) {
 			// pango_layout_set_attributes(pangoLayout, attributeList);
 			// pango_attr_list_unref(attributeList);
 
-			// Set text, use the fastest method depending on what we found in the text			
+			// Set text, use the fastest method depending on what we found in the text
 			if (mProbablyHasMarkup) {
 				pango_layout_set_markup(pangoLayout, mProcessedText.c_str(), -1);
-			}
-			else {
+			} else {
 				pango_layout_set_text(pangoLayout, mProcessedText.c_str(), -1);
 			}
 
@@ -431,11 +429,11 @@ bool CinderPango::render(bool force) {
 				cairo_surface_destroy(cairoSurface);
 			}
 
-			#if CAIRO_HAS_WIN32_SURFACE
+#if CAIRO_HAS_WIN32_SURFACE
 			cairoSurface = cairo_win32_surface_create_with_dib(cairoFormat, pixelWidth, pixelHeight);
-			#else
+#else
 			cairoSurface = cairo_image_surface_create(cairoFormat, pixelWidth, pixelHeight);
-			#endif
+#endif
 
 			if (CAIRO_STATUS_SUCCESS != cairo_surface_status(cairoSurface)) {
 				CI_LOG_E("Error creating Cairo surface.");
@@ -486,13 +484,13 @@ bool CinderPango::render(bool force) {
 			pango_cairo_update_layout(cairoContext, pangoLayout);
 			pango_cairo_show_layout(cairoContext, pangoLayout);
 
-			// Copy it out to a texture
-			#ifdef CAIRO_HAS_WIN32_SURFACE
+// Copy it out to a texture
+#ifdef CAIRO_HAS_WIN32_SURFACE
 			cairoImageSurface = cairo_win32_surface_get_image(cairoSurface);
 			unsigned char *pixels = cairo_image_surface_get_data(cairoImageSurface);
-			#else
+#else
 			unsigned char *pixels = cairo_image_surface_get_data(cairoSurface);
-			#endif
+#endif
 
 			if (mTexture == nullptr || (mTexture->getWidth() != pixelWidth) || (mTexture->getHeight() != pixelHeight)) {
 				// Create a new texture if needed
@@ -573,13 +571,12 @@ void CinderPango::loadFont(const ci::fs::path &path) {
 
 	if (!fontAddStatus) {
 		CI_LOG_E("Pango failed to load font from file \"" << path << "\"");
-	}
-	else {
+	} else {
 		CI_LOG_V("Pango thinks it loaded font " << path << " with status " << fontAddStatus);
 	}
 }
 
-std::vector<std::string> CinderPango::getFontList() {
+std::vector<std::string> CinderPango::getFontList(bool verbose) {
 	std::vector<std::string> fontList;
 
 	// http: // www.lemoda.net/pango/list-fonts/
@@ -594,19 +591,49 @@ std::vector<std::string> CinderPango::getFontList() {
 	// printf("There are %d families\n", n_families);
 	for (i = 0; i < n_families; i++) {
 		PangoFontFamily *family = families[i];
+
 		const char *family_name;
-
 		family_name = pango_font_family_get_name(family);
-
 		fontList.push_back(family_name);
+
+		if (verbose) {
+			CI_LOG_V("Family " << i << ": " << family_name);
+
+			// Also interrogate individual fonts in the family
+			// Useful if something isn't rendering correctly
+			PangoFontFace **pFontFaces = 0;
+			int numFontFaces = 0;
+			pango_font_family_list_faces(family, &pFontFaces, &numFontFaces);
+
+			// Get a description of each weight
+			for (int i = 0; i < numFontFaces; i++) {
+				PangoFontFace *face = pFontFaces[i];
+
+				const char *face_name = pango_font_face_get_face_name(face);
+				PangoFontDescription *description = pango_font_face_describe(face);
+				const char *description_string = pango_font_description_to_string(description);
+				PangoWeight weight = pango_font_description_get_weight(description);
+				uint hash = pango_font_description_hash(description);
+
+				CI_LOG_V("\tFace " << i << ": " << face_name);
+				CI_LOG_V("\t\tDescription: " << description_string);
+				CI_LOG_V("\t\tWeight: " << weight);
+				CI_LOG_V("\t\tHash: " << hash);
+				// TODO more stuff?
+
+				pango_font_description_free(description);
+			}
+
+			g_free(pFontFaces);
+		}
 	}
 	g_free(families);
 
 	return fontList;
 }
 
-void CinderPango::logFontList() {
-	auto fontList = getFontList();
+void CinderPango::logFontList(bool verbose) {
+	auto fontList = getFontList(verbose);
 
 	int index = 0;
 	for (auto &fontName : fontList) {
