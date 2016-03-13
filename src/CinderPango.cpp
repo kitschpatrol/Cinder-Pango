@@ -356,7 +356,6 @@ bool CinderPango::render(bool force) {
 			mNeedsFontUpdate = false;
 		}
 
-
 		bool needsSurfaceResize = false;
 
 		// If the text or the bounds change
@@ -433,7 +432,7 @@ bool CinderPango::render(bool force) {
 #if CAIRO_HAS_WIN32_SURFACE
 			cairoSurface = cairo_win32_surface_create_with_dib(cairoFormat, mPixelWidth, mPixelHeight);
 #else
-			cairoSurface = cairo_image_surface_create(cairoFormat, pixelWidth, pixelHeight);
+			cairoSurface = cairo_image_surface_create(cairoFormat, mPixelWidth, mPixelHeight);
 #endif
 
 			if (CAIRO_STATUS_SUCCESS != cairo_surface_status(cairoSurface)) {
