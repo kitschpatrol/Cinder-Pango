@@ -287,7 +287,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
-					"\"$(CINDER_PATH)/lib/libcinder_d.a\"",
+					"\"$(CINDER_PATH)lib/macosx/Debug/libcinder.a\"",
 					../../../lib/macosx/libcairo.a,
 					../../../lib/macosx/libfontconfig.a,
 					../../../lib/macosx/libfreetype.a,
@@ -332,7 +332,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
-					"\"$(CINDER_PATH)/lib/libcinder.a\"",
+					"\"$(CINDER_PATH)lib/macosx/Release/libcinder.a\"",
 					../../../lib/macosx/libcairo.a,
 					../../../lib/macosx/libfontconfig.a,
 					../../../lib/macosx/libfreetype.a,
