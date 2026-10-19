@@ -91,7 +91,7 @@ void PangoBasicApp::update() {
 				"<span foreground=\"red\" font=\"Times 48.0\">Red text</span> "
 				"<span foreground=\"blue\" font=\"Gravur Condensed Pro 72.0\">AVAVAVA Blue text</span> "
 				"<i>Italic Text</i> "
-				"hovedgruppen fra <i>forskjellige</i> destinasjoner. Tilknytningsbillett er gyldig inntil 24 timer f√∏r avreise hovedgruppe.\n\nUnicef said 3m "
+				"hovedgruppen fra <i>forskjellige</i> destinasjoner. Tilknytningsbillett er gyldig inntil 24 timer før avreise hovedgruppe.\n\nUnicef said 3m "
 				"people had been affected and more than <span font=\"33.0\">1,400</span> had been killed. <b>The government</b> said some 27,000 people remained "
 				"trapped "
 				"and awaiting help. " +

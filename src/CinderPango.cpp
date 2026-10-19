@@ -265,6 +265,7 @@ void CinderPango::setDefaultTextSmallCapsEnabled(bool value) {
 		mDefaultTextSmallCapsEnabled = value;
 		mNeedsFontUpdate = true;
 		mNeedsMeasuring = true;
+		mNeedsTextRender = true;
 	}
 }
 
@@ -277,6 +278,7 @@ void CinderPango::setDefaultTextItalicsEnabled(bool value) {
 		mDefaultTextItalicsEnabled = value;
 		mNeedsFontUpdate = true;
 		mNeedsMeasuring = true;
+		mNeedsTextRender = true;
 	}
 }
 
@@ -289,6 +291,7 @@ void CinderPango::setDefaultTextSize(float size) {
 		mDefaultTextSize = size;
 		mNeedsFontUpdate = true;
 		mNeedsMeasuring = true;
+		mNeedsTextRender = true;
 	}
 }
 
@@ -301,6 +304,7 @@ void CinderPango::setDefaultTextFont(std::string font) {
 		mDefaultTextFont = font;
 		mNeedsFontUpdate = true;
 		mNeedsMeasuring = true;
+		mNeedsTextRender = true;
 	}
 }
 
@@ -320,7 +324,7 @@ bool CinderPango::render(bool force) {
 			// Let's also decide and flag if there's markup in this string
 			// Faster to use pango_layout_set_text than pango_layout_set_markup later on if
 			// there's no markup to bother with.
-			// Be pretty liberal, there's more harm in false-postives than false-negatives
+			// Be pretty liberal, there's more harm in false-positives than false-negatives
 			mProbablyHasMarkup = ((mProcessedText.find("<") != std::string::npos) && (mProcessedText.find(">") != std::string::npos));
 
 			mNeedsMarkupDetection = false;
@@ -416,7 +420,7 @@ bool CinderPango::render(bool force) {
 		}
 
 		// Create Cairo surface buffer to draw glyphs into
-		// Force this is we need to render but don't have a surface yet
+		// Force this if we need to render but don't have a surface yet
 		bool freshCairoSurface = false;
 
 		if (force || needsSurfaceResize || (mNeedsTextRender && (cairoSurface == nullptr))) {
@@ -533,7 +537,7 @@ void CinderPango::setTextRenderer(kp::pango::TextRenderer renderer) {
 #ifdef CINDER_MSW
 		int status = _putenv_s("PANGOCAIRO_BACKEND", rendererName.c_str());
 #else
-		int status = setenv("PANGOCAIRO_BACKEND", rendererName.c_str(), 1); // this fixes some font issues on  mac
+		int status = setenv("PANGOCAIRO_BACKEND", rendererName.c_str(), 1); // this fixes some font issues on mac
 #endif
 		if (status == 0) {
 			CI_LOG_V("Set Pango Cairo backend renderer to: " << rendererName);
@@ -547,7 +551,7 @@ TextRenderer CinderPango::getTextRenderer() {
 	const char *rendererName = std::getenv("PANGOCAIRO_BACKEND");
 
 	if (rendererName == nullptr) {
-		CI_LOG_E("Could not read Pango Cairo backend environment variable. Assuming native renderer.");
+		CI_LOG_W("Could not read Pango Cairo backend environment variable. Assuming native renderer.");
 		return TextRenderer::PLATFORM_NATIVE;
 	}
 

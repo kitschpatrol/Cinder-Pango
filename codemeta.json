@@ -1,0 +1,45 @@
+{
+  "@context": "https://w3id.org/codemeta/3.1",
+  "@type": "SoftwareSourceCode",
+  "name": "Cinder-Pango",
+  "identifier": "com.kitschpatrol.pango",
+  "version": "1.0.0",
+  "description": "CinderBlock for using the Pango text layout and rendering library with Cinder. Supports inline style markup and complex layouts that would be tedious to achieve with Cinder's built-in TextBox and TextLayout classes.",
+  "author": [
+    {
+      "@type": "Person",
+      "email": "eric@ericmika.com",
+      "name": "Eric Mika",
+      "url": "https://ericmika.com"
+    }
+  ],
+  "keywords": [
+    "cinder",
+    "cinderblock",
+    "pango",
+    "cairo",
+    "text-rendering",
+    "typography"
+  ],
+  "programmingLanguage": "C++",
+  "operatingSystem": ["macOS", "Windows"],
+  "url": "https://github.com/kitschpatrol/Cinder-Pango",
+  "codeRepository": "https://github.com/kitschpatrol/Cinder-Pango.git",
+  "issueTracker": "https://github.com/kitschpatrol/Cinder-Pango/issues",
+  "license": "https://spdx.org/licenses/MIT",
+  "dateCreated": "2015-12-10",
+  "softwareRequirements": [
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "Cinder",
+      "codeRepository": "https://github.com/cinder/Cinder.git",
+      "version": "0.9.1dev"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "Pango",
+      "codeRepository": "https://gitlab.gnome.org/GNOME/pango.git",
+      "url": "https://www.pango.org"
+    }
+  ]
+}

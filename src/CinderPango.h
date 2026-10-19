@@ -79,7 +79,7 @@ public:
 
 	// setText can take inline markup to override the default text settings
 	// See here for full list of supported tags:
-	// https://developer.gnome.org/pango/stable/PangoMarkupFormat.html
+	// https://docs.gtk.org/Pango/pango_markup.html
 	void setText(std::string text);
 
 	// Text is rendered into this texture
@@ -131,7 +131,7 @@ public:
 	void setSpacing(float spacing);
 
 	// Renders text into the texture.
-	// Returns true if the texture was actually pdated, false if nothing had to change
+	// Returns true if the texture was actually updated, false if nothing had to change
 	// It's reasonable (and more efficient) to just run this in an update loop rather than calling it
 	// explicitly after every change to the text state. It will coalesce all invalidations since the
 	// last frame and only rebuild what needs to be rebuilt to render the diff.

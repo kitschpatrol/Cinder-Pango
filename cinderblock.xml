@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <cinder>
 	<block
-	name="Pango"
-	id="com.kitschpatrol.pango"
-	git="https://github.com/kitschpatrol/Cinder-Pango.git"
-	url="https://github.com/kitschpatrol/cinder-pango"
-	author="Eric Mika, Oriol Ferrer Mesià, Diederick Huijbers, Matthias Rohrbach, and others."
-	summary="A thin wrapper for using the Pango text layout and rendering library with Cinder. Supports inline style markup and complex layouts that would be tedious to achieve with Cinder's built-in TextBox and TextLayout classes."
-	version="1.0.0"
-	library="http://www.pango.org"
-	license="MIT + LGPL"
+		name="Pango"
+		id="com.kitschpatrol.pango"
+		git="https://github.com/kitschpatrol/Cinder-Pango.git"
+		url="https://github.com/kitschpatrol/Cinder-Pango"
+		author="Eric Mika"
+		summary="CinderBlock for using the Pango text layout and rendering library with Cinder. Supports inline style markup and complex layouts that would be tedious to achieve with Cinder's built-in TextBox and TextLayout classes."
+		version="1.0.0"
+		library="https://www.pango.org"
+		license="MIT"
 	>
 		<supports os="macosx" />
-		<supports os="msw" />	
-	
+		<supports os="msw" />
+
 		<headerPattern>src/*.h</headerPattern>
 		<sourcePattern>src/*.cpp</sourcePattern>
 
@@ -24,32 +24,32 @@
 		<includePath system="true">include/glib-2.0</includePath>
 		<includePath system="true">include/harfbuzz</includePath>
 		<includePath system="true">include/libpng16</includePath>
-		<includePath system="true">include/pixman-1</includePath>			
-		
+		<includePath system="true">include/pixman-1</includePath>
+
 		<platform os="macosx">
-				<staticLibrary>lib/macosx/libcairo.a</staticLibrary>
-				<staticLibrary>lib/macosx/libfontconfig.a</staticLibrary>
-				<staticLibrary>lib/macosx/libfreetype.a</staticLibrary>
-				<staticLibrary>lib/macosx/libgettextpo.a</staticLibrary>
-				<staticLibrary>lib/macosx/libgio-2.0.a</staticLibrary>
-				<staticLibrary>lib/macosx/libglib-2.0.a</staticLibrary>
-				<staticLibrary>lib/macosx/libgmodule-2.0.a</staticLibrary>
-				<staticLibrary>lib/macosx/libgobject-2.0.a</staticLibrary>
-				<staticLibrary>lib/macosx/libgthread-2.0.a</staticLibrary>
-				<staticLibrary>lib/macosx/libharfbuzz.a</staticLibrary>
-				<staticLibrary>lib/macosx/libintl.a</staticLibrary>
-				<staticLibrary>lib/macosx/libpango-1.0.a</staticLibrary>
-				<staticLibrary>lib/macosx/libpangocairo-1.0.a</staticLibrary>
-				<staticLibrary>lib/macosx/libpangoft2-1.0.a</staticLibrary>
-				<staticLibrary>lib/macosx/libpixman-1.a</staticLibrary>
-				<staticLibrary>lib/macosx/libpng.a</staticLibrary>
-				<framework>libffi.tbd</framework>
-				<framework>libiconv.tbd</framework>
-				<framework>libz.tbd</framework>				
-				<framework>libbz2.tbd</framework>
-				<framework>libexpat.tbd</framework>
+			<staticLibrary>lib/macosx/libcairo.a</staticLibrary>
+			<staticLibrary>lib/macosx/libfontconfig.a</staticLibrary>
+			<staticLibrary>lib/macosx/libfreetype.a</staticLibrary>
+			<staticLibrary>lib/macosx/libgettextpo.a</staticLibrary>
+			<staticLibrary>lib/macosx/libgio-2.0.a</staticLibrary>
+			<staticLibrary>lib/macosx/libglib-2.0.a</staticLibrary>
+			<staticLibrary>lib/macosx/libgmodule-2.0.a</staticLibrary>
+			<staticLibrary>lib/macosx/libgobject-2.0.a</staticLibrary>
+			<staticLibrary>lib/macosx/libgthread-2.0.a</staticLibrary>
+			<staticLibrary>lib/macosx/libharfbuzz.a</staticLibrary>
+			<staticLibrary>lib/macosx/libintl.a</staticLibrary>
+			<staticLibrary>lib/macosx/libpango-1.0.a</staticLibrary>
+			<staticLibrary>lib/macosx/libpangocairo-1.0.a</staticLibrary>
+			<staticLibrary>lib/macosx/libpangoft2-1.0.a</staticLibrary>
+			<staticLibrary>lib/macosx/libpixman-1.a</staticLibrary>
+			<staticLibrary>lib/macosx/libpng.a</staticLibrary>
+			<framework>libffi.tbd</framework>
+			<framework>libiconv.tbd</framework>
+			<framework>libz.tbd</framework>
+			<framework>libbz2.tbd</framework>
+			<framework>libexpat.tbd</framework>
 		</platform>
-		
+
 		<platform os="msw">
 			<includePath>src</includePath>
 			<staticLibrary>lib/msw/$(PlatformTarget)/cairo.lib</staticLibrary>
@@ -85,8 +85,7 @@
 			<buildCopy>lib/msw/$(PlatformTarget)/libpng15-15.dll</buildCopy>
 			<buildCopy>lib/msw/$(PlatformTarget)/libwinpthread-1.dll</buildCopy>
 			<buildCopy>lib/msw/$(PlatformTarget)/libxml2-2.dll</buildCopy>
-			<buildCopy>lib/msw/$(PlatformTarget)/zlib1.dll</buildCopy>			
+			<buildCopy>lib/msw/$(PlatformTarget)/zlib1.dll</buildCopy>
 		</platform>
-		
 	</block>
 </cinder>
